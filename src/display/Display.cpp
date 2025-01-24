@@ -1,48 +1,49 @@
 #include "Display.h"
 
-Display::Display() {
-    Adafruit_SSD1306 oled(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
-};
+Display::Display() : Adafruit_SSD1306(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET) {}
 
 void Display::begin() {
-    if (!oled.begin(SSD1306_SWITCHCAPVCC, I2C_ADDRESS)) {
+    if (!Adafruit_SSD1306::begin(SSD1306_SWITCHCAPVCC, I2C_ADDRESS)) {
         Serial.println("Display is not initialized.");
         while (true);
     }
-    oled.clearDisplay();
-    delay(2000);
-    oled.display();
+
+    Adafruit_SSD1306::clearDisplay();
+    delay(6000);
+    Adafruit_SSD1306::display();
 }
 
 void Display::draw(int iso, float aperture, int shutter, String film, int distance, int angle, float ev) {
-    oled.clearDisplay();
-    oled.setTextSize(1);
-    oled.setTextColor(SSD1306_WHITE);
+    Adafruit_SSD1306::clearDisplay();
+    Adafruit_SSD1306::setCursor(0, 0);
+    Adafruit_SSD1306::setTextSize(1);
+    Adafruit_SSD1306::setTextColor(SSD1306_WHITE);
 
-    oled.setCursor(0, 0);
-    oled.print("ISO:");
-    oled.print(iso);
-    oled.print(" F/");
-    oled.print(aperture, 1);
-    oled.print(" 1/");
-    oled.print(shutter);
+    Adafruit_SSD1306::print("ISO:");
+    Adafruit_SSD1306::print(iso);
+    Adafruit_SSD1306::print(" F");
+    Adafruit_SSD1306::print((char)47);
+    Adafruit_SSD1306::print(aperture, 1);
+    Adafruit_SSD1306::print(" 1");
+    Adafruit_SSD1306::print((char)47);
+    Adafruit_SSD1306::print(shutter);
 
-    oled.setCursor(0, 25);
-    oled.fillTriangle(6, 20, 2, 25, 10, 25, SSD1306_WHITE);
-    oled.setCursor(0, 30);
-    oled.fillTriangle(6, 40, 2, 35, 10, 35, SSD1306_WHITE);
-    oled.setCursor(20, 25);
-    oled.print(film);
+    Adafruit_SSD1306::setCursor(0, 25);
+    Adafruit_SSD1306::fillTriangle(6, 20, 2, 25, 10, 25, SSD1306_WHITE);
+    Adafruit_SSD1306::setCursor(0, 30);
+    Adafruit_SSD1306::fillTriangle(6, 40, 2, 35, 10, 35, SSD1306_WHITE);
+    Adafruit_SSD1306::setCursor(15, 25);
+    Adafruit_SSD1306::print(film);
 
-    oled.setCursor(0, 50);
-    oled.print(distance);
-    oled.print("cm  ");
-    oled.print(angle);
-    oled.print((char)247);
-    oled.print("  ");
-    oled.print(ev, 2);
-    oled.print("EV");
+    Adafruit_SSD1306::setCursor(0, 50);
+    Adafruit_SSD1306::print(distance);
+    Adafruit_SSD1306::print("cm  ");
+    Adafruit_SSD1306::print(angle);
+    Adafruit_SSD1306::print((char)247);
+    Adafruit_SSD1306::print("  ");
+    Adafruit_SSD1306::print(ev, 2);
+    Adafruit_SSD1306::print(" EV");
 
-    oled.display();
+    Adafruit_SSD1306::display();
 }
 

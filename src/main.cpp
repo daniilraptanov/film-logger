@@ -9,18 +9,18 @@ const int potPin3 = A2;
 Display display;
 FilmSettings filmSettings;
 
-Button buttonUp(3);
-Button buttonDown(4);
-Button buttonAccept(5);
+// Button buttonUp(3);
+// Button buttonDown(4);
+// Button buttonAccept(5);
 
 void setup() {
   Serial.begin(9600);
   Serial.println("Debug mode started...");
 
   display.begin();
-  buttonUp.begin();
-  buttonDown.begin();
-  buttonAccept.begin();
+  // buttonUp.begin();
+  // buttonDown.begin();
+  // buttonAccept.begin();
 }
 
 void loop() {
@@ -32,11 +32,11 @@ void loop() {
   int aperture = filmSettings.mapAperture(potValue2);
   int shutter = filmSettings.mapShutter(potValue3);
 
-  if (buttonUp.wasPressed()) {
-    Serial.println("Button was pressed.");
-  }
+  // if (buttonUp.wasPressed()) {
+  //   Serial.println("Button was pressed.");
+  // }
 
-  display.draw(iso, aperture, shutter, "Kodak Vision 3 500T", 451, 42, 7.65);
+  display.draw(iso, aperture, shutter, "Kodak Vision3 500T", 451, 42, 7.65);
 
   delay(500);
 }

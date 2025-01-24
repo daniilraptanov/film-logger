@@ -21,10 +21,9 @@
 //     EXPOSURE_VALUE = 7,
 // };
 
-class Display {
-    private:
+class Display : public Adafruit_SSD1306 {
+    // private:
         // Parameters selected;
-        Adafruit_SSD1306 oled;
 
     public:
         Display();
