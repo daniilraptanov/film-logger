@@ -2,8 +2,14 @@
 #define DISPLAY_H
 
 #include <Arduino.h>
+#include <Wire.h>
+#include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+#define OLED_RESET -1
+#define I2C_ADDRESS 0x3C
 
 // enum Parameters {
 //     ISO = 1,
@@ -18,7 +24,7 @@
 class Display {
     private:
         // Parameters selected;
-        Adafruit_SSD1306 display;
+        Adafruit_SSD1306 oled;
 
     public:
         Display();

@@ -18,12 +18,9 @@ void setup() {
   Serial.println("Debug mode started...");
 
   display.begin();
-  
   buttonUp.begin();
   buttonDown.begin();
   buttonAccept.begin();
-
-  display.draw(3200, 2.8, 1000, "Ilford Delta 3200P", 277, 45, 7.65);
 }
 
 void loop() {
@@ -38,9 +35,8 @@ void loop() {
   if (buttonUp.wasPressed()) {
     Serial.println("Button was pressed.");
   }
-  if (buttonDown.wasReleased()) {
-    Serial.println("Button was released.");
-  }
+
+  display.draw(iso, aperture, shutter, "Kodak Vision 3 500T", 451, 42, 7.65);
 
   delay(500);
 }
