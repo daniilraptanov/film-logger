@@ -21,6 +21,13 @@
 //     EXPOSURE_VALUE = 7,
 // };
 
+
+const char isoText[] PROGMEM = "ISO:";
+const char fText[] PROGMEM = " F";
+const char oneText[] PROGMEM = " 1";
+const char cmText[] PROGMEM = "cm  ";
+const char evText[] PROGMEM = " EV";
+
 class Display : public Adafruit_SSD1306 {
     // private:
         // Parameters selected;
@@ -29,7 +36,7 @@ class Display : public Adafruit_SSD1306 {
         Display();
 
         void begin();
-        void draw(int iso, float aperture, int shutter, String film, int distance, int angle, float ev);
+        void draw(int iso, float aperture, int shutter, const char* film, int distance, int angle, float ev);
 };
 
 #endif
