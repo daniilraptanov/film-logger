@@ -11,16 +11,6 @@
 #define OLED_RESET -1
 #define I2C_ADDRESS 0x3C
 
-// enum Parameters {
-//     ISO = 1,
-//     APERTURE = 2,
-//     SHUTTER = 3,
-//     FILM = 4,
-//     DISTANCE = 5,
-//     ANGLE = 6,
-//     EXPOSURE_VALUE = 7,
-// };
-
 
 const char isoText[] PROGMEM = "ISO:";
 const char fText[] PROGMEM = " F";
