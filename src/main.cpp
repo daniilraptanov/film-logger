@@ -9,7 +9,7 @@
 UserInterface ui;
 Display display;
 BH1750 lightMeter(0x5c);
-Ultrasonic ultrasonic(4, 7);
+Ultrasonic ultrasonic(7, 8);
 
 Button buttonUp(4);
 Button buttonDown(5);
