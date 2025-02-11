@@ -19,9 +19,6 @@ const char cmText[] PROGMEM = "cm  ";
 const char evText[] PROGMEM = " EV";
 
 class Display : public Adafruit_SSD1306 {
-    // private:
-        // Parameters selected;
-
     public:
         Display();
 

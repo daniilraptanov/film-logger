@@ -1,15 +1,15 @@
 #include <button/Button.h>
 #include <display/Display.h>
 #include <ui/UserInterface.h>
+#include <ultrasonic/Ultrasonic.h>
+#include <BH1750.h>
 
 #include <MemoryFree.h>
 
-const int potPin1 = A0;
-const int potPin2 = A1;
-const int potPin3 = A2;
-
 UserInterface ui;
 Display display;
+BH1750 lightMeter(0x5c);
+Ultrasonic ultrasonic(4, 7);
 
 Button buttonUp(4);
 Button buttonDown(5);
@@ -19,6 +19,9 @@ void setup() {
   Serial.begin(9600);
   Serial.println("Debug mode started...");
 
+  lightMeter.begin();
+  ultrasonic.begin();
+  
   display.begin();
   buttonUp.begin();
   buttonDown.begin();
@@ -35,5 +38,12 @@ void loop() {
   Serial.println("Current FL Parameter: ");
   Serial.print(ui.getMarked());
 
+  float lux = lightMeter.readLightLevel();
+  Serial.println(lux);
+
+  long distance = ultrasonic.getDistanceCM();
+  Serial.println(distance);
+
   delay(500);
 }
+
