@@ -38,21 +38,47 @@ void Display::drawBoldText(const __FlashStringHelper* text, int x, int y, int bo
     }
 }
 
-void Display::draw(FL_Parameter currentFL, int iso, float aperture, int shutter, const __FlashStringHelper* film, int distance, int angle, float ev) {
+void Display::drawUnderlinedText(const __FlashStringHelper* text, int x, int y) {
+    Adafruit_SSD1306::setTextSize(1);
+    Adafruit_SSD1306::setTextColor(SSD1306_WHITE);
+    Adafruit_SSD1306::setCursor(x, y);
+    Adafruit_SSD1306::print(text);
+
+    int textWidth = strlen_P((PGM_P)text) * 4;
+    int lineY = y + 8;
+
+    Adafruit_SSD1306::drawLine(x, lineY, x + textWidth, lineY, SSD1306_WHITE);    
+}
+
+void Display::draw(FL_Parameter marked, FL_Parameter selected, int iso, float aperture, int shutter, const __FlashStringHelper* film, int distance, int angle, float ev) {
     Adafruit_SSD1306::clearDisplay();
     Adafruit_SSD1306::setCursor(0, 0);
     Adafruit_SSD1306::setTextColor(SSD1306_WHITE);
     Adafruit_SSD1306::setTextSize(1);
     
 
-    drawBoldText(reinterpret_cast<const __FlashStringHelper*>(isoText), 0, 0, currentFL == FL_ISO ? 2 : 1);
+    if (selected == FL_ISO) {
+        drawUnderlinedText(reinterpret_cast<const __FlashStringHelper*>(isoText), 0, 0);
+    } else {
+        drawBoldText(reinterpret_cast<const __FlashStringHelper*>(isoText), 0, 0, marked == FL_ISO ? 2 : 1);
+    }
     Adafruit_SSD1306::print(iso);
 
-    drawBoldText(reinterpret_cast<const __FlashStringHelper*>(fText), 45, 0, currentFL == FL_APERTURE ? 2 : 1);
+
+    if (selected == FL_APERTURE) {
+        drawUnderlinedText(reinterpret_cast<const __FlashStringHelper*>(fText), 50, 0);
+    } else {
+        drawBoldText(reinterpret_cast<const __FlashStringHelper*>(fText), 50, 0, marked == FL_APERTURE ? 2 : 1);
+    }
     Adafruit_SSD1306::print((char)47);
     Adafruit_SSD1306::print(aperture, 1);
 
-    drawBoldText(reinterpret_cast<const __FlashStringHelper*>(oneText), 85, 0, currentFL == FL_SHUTTER ? 2 : 1);
+
+    if (selected == FL_SHUTTER) {
+        drawUnderlinedText(reinterpret_cast<const __FlashStringHelper*>(shText), 90, 0);
+    } else {
+        drawBoldText(reinterpret_cast<const __FlashStringHelper*>(shText), 90, 0, marked == FL_SHUTTER ? 2 : 1);
+    }
     Adafruit_SSD1306::print((char)47);
     Adafruit_SSD1306::print(shutter);
 

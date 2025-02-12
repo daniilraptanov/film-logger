@@ -14,8 +14,8 @@
 
 
 const char isoText[] PROGMEM = "ISO ";
-const char fText[] PROGMEM = " F";
-const char oneText[] PROGMEM = " 1";
+const char fText[] PROGMEM = "F";
+const char shText[] PROGMEM = "1";
 const char cmText[] PROGMEM = "cm  ";
 const char evText[] PROGMEM = " EV";
 
@@ -24,10 +24,11 @@ class Display : public Adafruit_SSD1306 {
         Display();
 
         void begin();
-        void draw(FL_Parameter currentFL, int iso, float aperture, int shutter, const __FlashStringHelper* film, int distance, int angle, float ev);
+        void draw(FL_Parameter marked, FL_Parameter selected, int iso, float aperture, int shutter, const __FlashStringHelper* film, int distance, int angle, float ev);
 
     private:
         void drawBoldText(const __FlashStringHelper* text, int x, int y, int bold);
+        void drawUnderlinedText(const __FlashStringHelper* text, int x, int y);
 };
 
 #endif

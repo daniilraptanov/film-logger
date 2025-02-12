@@ -39,7 +39,7 @@ void loop() {
   
   long distance = ultrasonic.getDistanceCM();
 
-  display.draw(ui.getMarked(), ui.getISO(), ui.getAperture(), ui.getShutter(), F("Kodak Vision3 500T"), distance, 42, 7.65);
+  display.draw(ui.getMarked(), ui.getSelected(), ui.getISO(), ui.getAperture(), ui.getShutter(), F("Kodak Vision3 500T"), distance, 42, 7.65);
 
   delay(500);
 }

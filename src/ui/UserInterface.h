@@ -15,9 +15,9 @@ class UserInterface {
         float APERTURE_VALUES[12] = {0, 1.4, 2, 2.8, 3.5, 4, 5.6, 8, 11, 16, 22, 64};
         int SHUTTER_VALUES[12] = {0, 1000, 500, 250, 125, 60, 30, 15, 8, 4, 2, 1};
         
-        int ISO_SIZEOF = sizeof(ISO_VALUES);
-        int APERTURE_SIZEOF = sizeof(APERTURE_VALUES);
-        int SHUTTER_SIZEOF = sizeof(SHUTTER_VALUES);
+        int ISO_SIZEOF = 16;
+        int APERTURE_SIZEOF = 12;
+        int SHUTTER_SIZEOF = 12;
 
         FL_Parameter marked;
         FL_Parameter selected;
@@ -35,6 +35,7 @@ class UserInterface {
         void handleUI(bool buttonUp, bool buttonDown, bool buttonAccept);
         
         FL_Parameter getMarked();
+        FL_Parameter getSelected();
         int getISO();
         float getAperture();
         int getShutter();

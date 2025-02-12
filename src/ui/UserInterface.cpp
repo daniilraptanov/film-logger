@@ -1,5 +1,7 @@
 #include "./UserInterface.h"
 
+#include <Arduino.h>
+
 UserInterface::UserInterface() {
     marked = FL_ISO;
     selected = FL_NONE;
@@ -25,6 +27,7 @@ int UserInterface::getNextIndex(int index, int maxIndex, bool buttonUp, bool but
         }
         return index;
     }
+    return index;
 }
 
 void UserInterface::handleUI(bool buttonUp, bool buttonDown, bool buttonAccept) {
@@ -62,6 +65,7 @@ void UserInterface::handleUI(bool buttonUp, bool buttonDown, bool buttonAccept) 
         } else {
             isoIndex = getNextIndex(isoIndex, ISO_SIZEOF, buttonUp, buttonDown);
         }
+        break;
     
     case FL_APERTURE:
         if (buttonAccept) {
@@ -69,6 +73,7 @@ void UserInterface::handleUI(bool buttonUp, bool buttonDown, bool buttonAccept) 
         } else {
             apertureIndex = getNextIndex(apertureIndex, APERTURE_SIZEOF, buttonUp, buttonDown);
         }
+        break;
 
     case FL_SHUTTER:
         if (buttonAccept) {
@@ -76,6 +81,7 @@ void UserInterface::handleUI(bool buttonUp, bool buttonDown, bool buttonAccept) 
         } else {
             shutterIndex = getNextIndex(shutterIndex, SHUTTER_SIZEOF, buttonUp, buttonDown);
         }
+        break;
 
     case FL_FILM:
         // TODO
@@ -101,3 +107,8 @@ int UserInterface::getShutter() {
 FL_Parameter UserInterface::getMarked() {
     return marked;
 }
+
+FL_Parameter UserInterface::getSelected() {
+    return selected;
+}
+
