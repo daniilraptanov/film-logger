@@ -5,6 +5,7 @@
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
+#include <ui/UserInterface.h>
 
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
@@ -12,7 +13,7 @@
 #define I2C_ADDRESS 0x3C
 
 
-const char isoText[] PROGMEM = "ISO:";
+const char isoText[] PROGMEM = "ISO ";
 const char fText[] PROGMEM = " F";
 const char oneText[] PROGMEM = " 1";
 const char cmText[] PROGMEM = "cm  ";
@@ -23,7 +24,10 @@ class Display : public Adafruit_SSD1306 {
         Display();
 
         void begin();
-        void draw(int iso, float aperture, int shutter, const char* film, int distance, int angle, float ev);
+        void draw(FL_Parameter currentFL, int iso, float aperture, int shutter, const __FlashStringHelper* film, int distance, int angle, float ev);
+
+    private:
+        void drawBoldText(const __FlashStringHelper* text, int x, int y, int bold);
 };
 
 #endif

@@ -14,18 +14,45 @@ void Display::begin() {
     Adafruit_SSD1306::display();
 }
 
-void Display::draw(int iso, float aperture, int shutter, const char* film, int distance, int angle, float ev) {
-    Adafruit_SSD1306::clearDisplay();
-    Adafruit_SSD1306::setCursor(0, 0);
+void drawBoldText(Adafruit_SSD1306 &display, int x, int y, const char *text, int boldness) {
+    display.setTextSize(1);
+    display.setTextColor(SSD1306_WHITE);
+    
+    for (int dx = 0; dx < boldness; dx++) {
+        for (int dy = 0; dy < boldness; dy++) {
+            display.setCursor(x + dx, y + dy);
+            display.print(text);
+        }
+    }
+}
+
+void Display::drawBoldText(const __FlashStringHelper* text, int x, int y, int bold) {
     Adafruit_SSD1306::setTextSize(1);
     Adafruit_SSD1306::setTextColor(SSD1306_WHITE);
+    
+    for (int dx = 0; dx < bold; dx++) {
+        for (int dy = 0; dy < bold; dy++) {
+            Adafruit_SSD1306::setCursor(x + dx, y + dy);
+            Adafruit_SSD1306::print(text);
+        }
+    }
+}
 
-    Adafruit_SSD1306::print(reinterpret_cast<const __FlashStringHelper*>(isoText));
+void Display::draw(FL_Parameter currentFL, int iso, float aperture, int shutter, const __FlashStringHelper* film, int distance, int angle, float ev) {
+    Adafruit_SSD1306::clearDisplay();
+    Adafruit_SSD1306::setCursor(0, 0);
+    Adafruit_SSD1306::setTextColor(SSD1306_WHITE);
+    Adafruit_SSD1306::setTextSize(1);
+    
+
+    drawBoldText(reinterpret_cast<const __FlashStringHelper*>(isoText), 0, 0, currentFL == FL_ISO ? 2 : 1);
     Adafruit_SSD1306::print(iso);
-    Adafruit_SSD1306::print(reinterpret_cast<const __FlashStringHelper*>(fText));
+
+    drawBoldText(reinterpret_cast<const __FlashStringHelper*>(fText), 45, 0, currentFL == FL_APERTURE ? 2 : 1);
     Adafruit_SSD1306::print((char)47);
     Adafruit_SSD1306::print(aperture, 1);
-    Adafruit_SSD1306::print(reinterpret_cast<const __FlashStringHelper*>(oneText));
+
+    drawBoldText(reinterpret_cast<const __FlashStringHelper*>(oneText), 85, 0, currentFL == FL_SHUTTER ? 2 : 1);
     Adafruit_SSD1306::print((char)47);
     Adafruit_SSD1306::print(shutter);
 
