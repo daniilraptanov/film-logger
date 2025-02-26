@@ -11,7 +11,7 @@ class Button {
         unsigned long lastDebounceDelay;
 
     public:
-        Button(uint8_t pin, unsigned long debounceDelay = 100);
+        Button(uint8_t pin, unsigned long debounceDelay = 10);
 
         void begin();
         bool isPressed();
