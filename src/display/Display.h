@@ -19,7 +19,7 @@ const char shText[] PROGMEM = "1";
 const char cmText[] PROGMEM = "cm  ";
 const char evText[] PROGMEM = " EV";
 
-class Display : public Adafruit_SSD1306 {
+class Display : protected Adafruit_SSD1306 {
     public:
         Display();
 
