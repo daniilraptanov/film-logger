@@ -10,10 +10,18 @@ void LightSensor::begin() {
     Serial.println("TCS34725 found!");
 }
 
-//   uint16_t r, g, b, c;
-//   tcs.getRawData(&r, &g, &b, &c);
-//   Serial.print("R: "); Serial.print(r);
-//   Serial.print(" G: "); Serial.print(g);
-//   Serial.print(" B: "); Serial.print(b);
-//   Serial.print(" C: "); Serial.println(c);
+float LightSensor::getEV() {
+    uint16_t r, g, b, c;
+    getRawData(&r, &g, &b, &c);
+    return log((calculateLux(r, g, b)) / (2.5)) / log(2);
+}
 
+float LightSensor::getCCT() {
+    uint16_t r, g, b, c;
+    getRawData(&r, &g, &b, &c);
+    return calculateColorTemperature(r, g, b);
+}
+
+float LightSensor::calculateShutter(float &ev, int &iso, float &aperture) {
+    return (pow(2, ev) * (iso / 100)) / pow(aperture, 2);
+}

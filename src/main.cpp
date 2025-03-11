@@ -4,14 +4,12 @@
 #include <ultrasonic/Ultrasonic.h>
 #include <light_sensor/LightSensor.h>
 
-// #include <BH1750.h>
 // #include <MemoryFree.h>
-// BH1750 lightMeter(0x5c);
 
 UserInterface ui;
 Display display;
 LightSensor lightSensor;
-Ultrasonic ultrasonic(7, 8);
+// Ultrasonic ultrasonic(7, 8, 10);
 Button buttonDown(6);
 Button buttonAccept(5);
 Button buttonUp(4);
@@ -20,9 +18,9 @@ void setup() {
   Serial.begin(9600);
   Serial.println(F("Debug mode started..."));
 
-  ultrasonic.begin();
   display.begin();
   lightSensor.begin();
+  // ultrasonic.begin();
   buttonUp.begin();
   buttonDown.begin();
   buttonAccept.begin();
@@ -32,10 +30,24 @@ void setup() {
 }
 
 void loop() {
-  ui.handleUI(buttonUp.wasPressed(), buttonDown.wasPressed(), buttonAccept.wasPressed());  
-  long distance = ultrasonic.getDistanceCM();
+  ui.handleUI(buttonUp.wasPressed(), buttonDown.wasPressed(), buttonAccept.wasPressed());
 
-  display.draw(ui.getMarked(), ui.getSelected(), ui.getISO(), ui.getAperture(), ui.getShutter(), F("Kodak Vision3 500T"), distance, 42, 7.65);
+  float ev = lightSensor.getEV();
+  int iso = ui.getISO();
+  float aperture = ui.getAperture();
+  float shutter = lightSensor.calculateShutter(ev, iso, aperture);
+
+  display.draw(
+    ui.getMarked(), 
+    ui.getSelected(), 
+    iso, 
+    aperture,
+    shutter, 
+    F("Kodak Vision3 500T"),
+    42, // ultrasonic.getFilteredDistanceCM(), 
+    42, 
+    ev
+  );
 
   delay(500);
 }

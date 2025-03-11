@@ -1,8 +1,9 @@
 #include <./ultrasonic/Ultrasonic.h>
 
-Ultrasonic::Ultrasonic(int trigPin, int echoPin) {
+Ultrasonic::Ultrasonic(int trigPin, int echoPin, int measurementsCount) {
     this->trigPin = trigPin;
     this->echoPin = echoPin;
+    this->measurementsCount = measurementsCount;
 }
 
 void Ultrasonic::begin() {
@@ -34,4 +35,13 @@ long Ultrasonic::getDistanceCM() {
     if(duration > 15000)
         return 150;
     else return cm;
+}
+
+long Ultrasonic::getFilteredDistanceCM() {
+    long result = 0;
+    for (int i = 0; i < measurementsCount; i++) {
+        result += getDistanceCM();
+        delay(10);
+    }
+    return result / measurementsCount;
 }
