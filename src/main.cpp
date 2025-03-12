@@ -9,7 +9,7 @@
 UserInterface ui;
 Display display;
 LightSensor lightSensor;
-// Ultrasonic ultrasonic(7, 8, 10);
+Ultrasonic ultrasonic(7, 8, 10);
 Button buttonDown(6);
 Button buttonAccept(5);
 Button buttonUp(4);
@@ -20,13 +20,13 @@ void setup() {
 
   display.begin();
   lightSensor.begin();
-  // ultrasonic.begin();
+  ultrasonic.begin();
   buttonUp.begin();
   buttonDown.begin();
   buttonAccept.begin();
 
-//   // Serial.print("Free memory after initialization: ");
-//   // Serial.println(freeMemory());
+  // Serial.print("Free memory after initialization: ");
+  // Serial.println(freeMemory());
 }
 
 void loop() {
@@ -36,16 +36,15 @@ void loop() {
   int iso = ui.getISO();
   float aperture = ui.getAperture();
   float shutter = lightSensor.calculateShutter(ev, iso, aperture);
+  long distance = ultrasonic.getFilteredDistanceCM();
 
   display.draw(
     ui.getMarked(), 
     ui.getSelected(), 
-    iso, 
+    iso,
     aperture,
-    shutter, 
-    F("Kodak Vision3 500T"),
-    42, // ultrasonic.getFilteredDistanceCM(), 
-    42, 
+    shutter,
+    distance,
     ev
   );
 

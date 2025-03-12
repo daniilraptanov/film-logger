@@ -50,7 +50,7 @@ void Display::drawUnderlinedText(const __FlashStringHelper* text, int x, int y) 
     Adafruit_SSD1306::drawLine(x, lineY, x + textWidth, lineY, SSD1306_WHITE);    
 }
 
-void Display::draw(FL_Parameter marked, FL_Parameter selected, int iso, float aperture, int shutter, const __FlashStringHelper* film, int distance, int angle, float ev) {
+void Display::draw(FL_Parameter marked, FL_Parameter selected, int iso, float aperture, int shutter, int distance, float ev) {
     Adafruit_SSD1306::clearDisplay();
     Adafruit_SSD1306::setCursor(0, 0);
     Adafruit_SSD1306::setTextColor(SSD1306_WHITE);
@@ -82,19 +82,9 @@ void Display::draw(FL_Parameter marked, FL_Parameter selected, int iso, float ap
     Adafruit_SSD1306::print((char)47);
     Adafruit_SSD1306::print(shutter);
 
-    // Adafruit_SSD1306::setCursor(0, 25);
-    // Adafruit_SSD1306::fillTriangle(6, 20, 2, 25, 10, 25, SSD1306_WHITE);
-    // Adafruit_SSD1306::setCursor(0, 30);
-    // Adafruit_SSD1306::fillTriangle(6, 40, 2, 35, 10, 35, SSD1306_WHITE);
-    // Adafruit_SSD1306::setCursor(15, 25);
-    // Adafruit_SSD1306::print(film);
-
     Adafruit_SSD1306::setCursor(80, 20);
     Adafruit_SSD1306::print(distance);
     Adafruit_SSD1306::print(reinterpret_cast<const __FlashStringHelper*>(cmText));
-    
-    // Adafruit_SSD1306::print(angle);
-    // Adafruit_SSD1306::print((char)247);
     
     Adafruit_SSD1306::setCursor(0, 40);
     Adafruit_SSD1306::print(ev, 2);

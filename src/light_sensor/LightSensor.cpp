@@ -1,13 +1,13 @@
 #include <light_sensor/LightSensor.h>
 
-LightSensor::LightSensor() : Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_154MS, TCS34725_GAIN_4X) {}
+LightSensor::LightSensor() : Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_101MS, TCS34725_GAIN_1X) {}
 
 void LightSensor::begin() {
     if (!Adafruit_TCS34725::begin()) {
-        Serial.println("TCS34725 is not initialized.");
+        Serial.println(F("TCS34725 is not initialized."));
         while (true);
     }
-    Serial.println("TCS34725 found!");
+    Serial.println(F("TCS34725 found!"));
 }
 
 float LightSensor::getEV() {

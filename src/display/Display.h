@@ -24,7 +24,7 @@ class Display : protected Adafruit_SSD1306 {
         Display();
 
         void begin();
-        void draw(FL_Parameter marked, FL_Parameter selected, int iso, float aperture, int shutter, const __FlashStringHelper* film, int distance, int angle, float ev);
+        void draw(FL_Parameter marked, FL_Parameter selected, int iso, float aperture, int shutter, int distance, float ev);
 
     private:
         void drawBoldText(const __FlashStringHelper* text, int x, int y, int bold);
