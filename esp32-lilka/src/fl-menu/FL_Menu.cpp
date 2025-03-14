@@ -18,9 +18,8 @@ void FL_Menu::drawMenu(lilka::Canvas *canvas) {
     selected = true;
 }
 
-void FL_Menu::handleButtons() {
-    lilka::State state = lilka::controller.getState();
-    if (state.start.justPressed) {
+void FL_Menu::handleButtons(lilka::State *state) {
+    if (state->start.justPressed) {
         selected = false;
     }
 }

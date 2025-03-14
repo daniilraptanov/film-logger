@@ -16,7 +16,7 @@ class FL_Menu : private lilka::Menu {
         FL_Menu();
         void begin();
         void drawMenu(lilka::Canvas *canvas);
-        void handleButtons();
+        void handleButtons(lilka::State *state);
         bool isSelected();
 
         bool isLogger();

@@ -19,10 +19,13 @@ void setup() {
 
 void loop() {
     lilka::Canvas canvas;
+    lilka::State state = lilka::controller.getState();
+
     if (!menu.isSelected()) {
         menu.drawMenu(&canvas);
     }
     else if (menu.isLogger()) {
+        logger.handleParameters(&state);
         logger.drawUI(&canvas);
     }
     else if (menu.isTimer()) {
@@ -34,5 +37,5 @@ void loop() {
     else if (menu.isMagicHours()) {
         magicHours.drawUI(&canvas);
     }
-    menu.handleButtons();
+    menu.handleButtons(&state);
 }
