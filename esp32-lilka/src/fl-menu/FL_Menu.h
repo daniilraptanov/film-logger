@@ -18,7 +18,11 @@ class FL_Menu : private lilka::Menu {
         void drawMenu(lilka::Canvas *canvas);
         void handleButtons();
         bool isSelected();
+
         bool isLogger();
+        bool isTimer();
+        bool isMultiExposure();
+        bool isMagicHours();
 
     private:
         lilka::Canvas *canvas;

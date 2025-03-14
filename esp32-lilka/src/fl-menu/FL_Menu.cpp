@@ -33,3 +33,20 @@ bool FL_Menu::isLogger() {
     int index = getCursor();
     return index == static_cast<int>(FL_Menu_Enum::LOGGER);
 }
+
+bool FL_Menu::isTimer() {
+    int index = getCursor();
+    return index == static_cast<int>(FL_Menu_Enum::TIMER);
+}
+
+bool FL_Menu::isMultiExposure() {
+    int index = getCursor();
+    return index == static_cast<int>(FL_Menu_Enum::MULTI_EXPOSURE);
+}
+
+bool FL_Menu::isMagicHours() {
+    int index = getCursor();
+    return index == static_cast<int>(FL_Menu_Enum::MAGIC_HOURS);
+}
+
+
