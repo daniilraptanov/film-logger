@@ -1,10 +1,12 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 
-class Logger {
+#include <menu-component/MenuComponent.h>
+
+class Logger : protected MenuComponent {
     public:
         Logger();
-        void begin();
+        void drawUI(lilka::Canvas *canvas);
 };
 
 #endif

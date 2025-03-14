@@ -1,31 +1,23 @@
 #include <lilka.h>
+#include <fl-menu/FL_Menu.h>
+#include <logger/Logger.h>
+
+FL_Menu menu;
+Logger logger;
 
 void setup() {
-  lilka::begin();
+    lilka::begin();
+    menu.begin();
 }
 
-enum class FL_Menu {
-  LOGGER,
-  TIMER,
-  MULTI_EXPOSURE,
-  MAGIC_HOURS
-};
 
 void loop() {
     lilka::Canvas canvas;
-
-    lilka::Menu FL_Menu("Вітаємо у Світогляді!");
-    FL_Menu.addItem("Логер");
-    FL_Menu.addItem("Таймер");
-    FL_Menu.addItem("Мультиекспозиція");
-    FL_Menu.addItem("Магічні години");
-    while (!FL_Menu.isFinished()) {
-        FL_Menu.update();
-        FL_Menu.draw(&canvas);
-        lilka::display.drawCanvas(&canvas);
+    if (!menu.isSelected()) {
+        menu.drawMenu(&canvas);
     }
-    int index = FL_Menu.getCursor();
-    lilka::MenuItem item;
-    FL_Menu.getItem(index, &item);
-    Serial.println(String("Ви обрали пункт ") + item.title);
+    if (menu.isLogger()) {
+        logger.drawUI(&canvas);
+    }
+    menu.handleButtons();
 }
