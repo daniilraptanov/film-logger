@@ -50,7 +50,7 @@ void Display::drawUnderlinedText(const __FlashStringHelper* text, int x, int y) 
     Adafruit_SSD1306::drawLine(x, lineY, x + textWidth, lineY, SSD1306_WHITE);    
 }
 
-void Display::draw(FL_Parameter marked, FL_Parameter selected, int iso, float aperture, int shutter, int distance, float ev) {
+void Display::draw(FL_Parameter marked, FL_Parameter selected, int iso, float aperture, int shutter, int distance, float ev, float cct) {
     Adafruit_SSD1306::clearDisplay();
     Adafruit_SSD1306::setCursor(0, 0);
     Adafruit_SSD1306::setTextColor(SSD1306_WHITE);
@@ -89,6 +89,10 @@ void Display::draw(FL_Parameter marked, FL_Parameter selected, int iso, float ap
     Adafruit_SSD1306::setCursor(0, 40);
     Adafruit_SSD1306::print(ev, 2);
     Adafruit_SSD1306::print(reinterpret_cast<const __FlashStringHelper*>(evText));
+
+    Adafruit_SSD1306::setCursor(60, 40);
+    Adafruit_SSD1306::print(cct, 2);
+    Adafruit_SSD1306::print(reinterpret_cast<const __FlashStringHelper*>(cctText));
 
     Adafruit_SSD1306::display();
 }

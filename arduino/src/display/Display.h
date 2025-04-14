@@ -18,13 +18,14 @@ const char fText[] PROGMEM = "F";
 const char shText[] PROGMEM = "1";
 const char cmText[] PROGMEM = "cm  ";
 const char evText[] PROGMEM = " EV";
+const char cctText[] PROGMEM = " K";
 
 class Display : protected Adafruit_SSD1306 {
     public:
         Display();
 
         void begin();
-        void draw(FL_Parameter marked, FL_Parameter selected, int iso, float aperture, int shutter, int distance, float ev);
+        void draw(FL_Parameter marked, FL_Parameter selected, int iso, float aperture, int shutter, int distance, float ev, float cct);
 
     private:
         void drawBoldText(const __FlashStringHelper* text, int x, int y, int bold);

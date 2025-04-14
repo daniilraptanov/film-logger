@@ -37,6 +37,7 @@ void loop() {
   float aperture = ui.getAperture();
   float shutter = lightSensor.calculateShutter(ev, iso, aperture);
   long distance = ultrasonic.getFilteredDistanceCM();
+  float cct = lightSensor.getCCT();
 
   display.draw(
     ui.getMarked(), 
@@ -45,7 +46,8 @@ void loop() {
     aperture,
     shutter,
     distance,
-    ev
+    ev,
+    cct
   );
 
   delay(500);
