@@ -25,3 +25,29 @@ float LightSensor::getCCT() {
 float LightSensor::calculateShutter(float &ev, int &iso, float &aperture) {
     return (pow(2, ev) * (iso / 100)) / pow(aperture, 2);
 }
+
+
+/*
+    Use this method only in testing mode!
+*/
+void LightSensor::printToSerial() {
+    uint16_t r, g, b, c;
+    getRawData(&r, &g, &b, &c);
+    
+    Serial.print(F("Clear: "));
+    Serial.print(c);
+
+    Serial.print(F(";   Red: "));
+    Serial.print(r);
+
+    Serial.print(F(";   Green: "));
+    Serial.print(g);
+
+    Serial.print(F(";   Blue: "));
+    Serial.print(b);
+
+    Serial.print(F(";   Lux: "));
+    Serial.print(calculateLux(r, g, b));
+    
+    Serial.println();
+}

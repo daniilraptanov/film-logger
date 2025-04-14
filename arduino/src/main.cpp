@@ -50,5 +50,7 @@ void loop() {
     cct
   );
 
+  lightSensor.printToSerial();
+
   delay(500);
 }

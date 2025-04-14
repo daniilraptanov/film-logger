@@ -12,6 +12,7 @@ class LightSensor : protected Adafruit_TCS34725 {
         float getEV();
         float getCCT();
         float calculateShutter(float &ev, int &iso, float &aperture);
+        void printToSerial();
 };
 
 #endif
