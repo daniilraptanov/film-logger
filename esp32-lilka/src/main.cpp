@@ -1,15 +1,11 @@
 #include <lilka.h>
 #include <fl-menu/FL_Menu.h>
-#include <logger/Logger.h>
-#include <timer/Timer.h>
-#include <multi-exposure/MultiExposure.h>
-#include <magic-hours/MagicHours.h>
+#include <light-meter/LightMeter.h>
+#include <exposure/Exposure.h>
 
 FL_Menu menu;
-Logger logger;
-Timer timer;
-MultiExposure multiExposure;
-MagicHours magicHours;
+LightMeter lightMeter;
+Exposure exposure;
 
 void setup() {
     lilka::begin();
@@ -24,18 +20,12 @@ void loop() {
     if (!menu.isSelected()) {
         menu.drawMenu(&canvas);
     }
-    else if (menu.isLogger()) {
-        logger.handleParameters(&state);
-        logger.drawUI(&canvas);
+    else if (menu.isLightMeter()) {
+        lightMeter.drawUI(&canvas);
     }
-    else if (menu.isTimer()) {
-        timer.drawUI(&canvas);
-    }
-    else if (menu.isMultiExposure()) {
-        multiExposure.drawUI(&canvas);
-    }
-    else if (menu.isMagicHours()) {
-        magicHours.drawUI(&canvas);
+    else if (menu.isExposure()) {
+        exposure.handleParameters(&state);
+        exposure.drawUI(&canvas);
     }
     menu.handleButtons(&state);
 }

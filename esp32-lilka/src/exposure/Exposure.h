@@ -1,5 +1,5 @@
-#ifndef LOGGER_H
-#define LOGGER_H
+#ifndef EXPOSURE_H
+#define EXPOSURE_H
 
 #include <menu-component/MenuComponent.h>
 
@@ -9,9 +9,9 @@ enum class FL_Parameter {
     APERTURE,
 };
 
-class Logger : protected MenuComponent {
+class Exposure : protected MenuComponent {
     public:
-        Logger();
+        Exposure();
         void drawUI(lilka::Canvas *canvas);
         void handleParameters(lilka::State *state);
         int getISO();

@@ -1,8 +1,8 @@
-#include <timer/Timer.h>
+#include <light-meter/LightMeter.h>
 
-Timer::Timer() : MenuComponent() {}
+LightMeter::LightMeter() : MenuComponent() {}
 
-void Timer::drawUI(lilka::Canvas *canvas) {
+void LightMeter::drawUI(lilka::Canvas *canvas) {
     drawCommonUI(canvas);
 
     canvas->setTextColor(lilka::colors::White);

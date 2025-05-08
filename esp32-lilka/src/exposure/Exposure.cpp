@@ -1,10 +1,10 @@
-#include <logger/Logger.h>
+#include <exposure/Exposure.h>
 
-Logger::Logger() : MenuComponent() {
+Exposure::Exposure() : MenuComponent() {
     selected = FL_Parameter::NONE;
 }
 
-void Logger::drawUI(lilka::Canvas *canvas) {
+void Exposure::drawUI(lilka::Canvas *canvas) {
     drawCommonUI(canvas);
     
     // ISO, F-stop, Shutter
@@ -63,7 +63,7 @@ void Logger::drawUI(lilka::Canvas *canvas) {
     lilka::display.drawCanvas(canvas);
 }
 
-void Logger::handleParameters(lilka::State *state) {
+void Exposure::handleParameters(lilka::State *state) {
     if (state->up.justPressed) {
         selected =
             selected == FL_Parameter::NONE ? FL_Parameter::ISO :
@@ -84,7 +84,7 @@ void Logger::handleParameters(lilka::State *state) {
     }
 }
 
-int Logger::getNextIndex(int index, int maxIndex, bool buttonUp, bool buttonDown) {
+int Exposure::getNextIndex(int index, int maxIndex, bool buttonUp, bool buttonDown) {
     if (buttonUp) {
         if (index == maxIndex) {
             return 0;
@@ -104,10 +104,10 @@ int Logger::getNextIndex(int index, int maxIndex, bool buttonUp, bool buttonDown
     return index;
 }
 
-int Logger::getISO() {
+int Exposure::getISO() {
     return ISO_VALUES[isoIndex];
 }
 
-float Logger::getAperture() {
+float Exposure::getAperture() {
     return APERTURE_VALUES[apertureIndex];
 }

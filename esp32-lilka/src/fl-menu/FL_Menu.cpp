@@ -3,10 +3,8 @@
 FL_Menu::FL_Menu() : lilka::Menu("Вітаємо у Світогляді!") {}
 
 void FL_Menu::begin() {
-    addItem("Логер");
-    addItem("Таймер");
-    addItem("Мультиекспозиція");
-    addItem("Магічні години");
+    addItem("Світлометрія");
+    addItem("Експозиція");
 }
 
 void FL_Menu::drawMenu(lilka::Canvas *canvas) {
@@ -28,24 +26,13 @@ bool FL_Menu::isSelected() {
     return selected;
 }
 
-bool FL_Menu::isLogger() {
+bool FL_Menu::isLightMeter() {
     int index = getCursor();
-    return index == static_cast<int>(FL_Menu_Enum::LOGGER);
+    return index == static_cast<int>(FL_Menu_Enum::LIGHT_METER);
 }
 
-bool FL_Menu::isTimer() {
+bool FL_Menu::isExposure() {
     int index = getCursor();
-    return index == static_cast<int>(FL_Menu_Enum::TIMER);
+    return index == static_cast<int>(FL_Menu_Enum::EXPOSURE);
 }
-
-bool FL_Menu::isMultiExposure() {
-    int index = getCursor();
-    return index == static_cast<int>(FL_Menu_Enum::MULTI_EXPOSURE);
-}
-
-bool FL_Menu::isMagicHours() {
-    int index = getCursor();
-    return index == static_cast<int>(FL_Menu_Enum::MAGIC_HOURS);
-}
-
 

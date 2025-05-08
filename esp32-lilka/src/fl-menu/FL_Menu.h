@@ -4,10 +4,8 @@
 #include <lilka.h>
 
 enum class FL_Menu_Enum {
-    LOGGER,
-    TIMER,
-    MULTI_EXPOSURE,
-    MAGIC_HOURS
+    LIGHT_METER,
+    EXPOSURE,
 };
   
 
@@ -19,10 +17,8 @@ class FL_Menu : private lilka::Menu {
         void handleButtons(lilka::State *state);
         bool isSelected();
 
-        bool isLogger();
-        bool isTimer();
-        bool isMultiExposure();
-        bool isMagicHours();
+        bool isLightMeter();
+        bool isExposure();
 
     private:
         lilka::Canvas *canvas;

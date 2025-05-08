@@ -1,11 +1,11 @@
-#ifndef TIMER_H
-#define TIMER_H
+#ifndef LIGHT_METER_H
+#define LIGHT_METER_H
 
 #include <menu-component/MenuComponent.h>
 
-class Timer : protected MenuComponent {
+class LightMeter : protected MenuComponent {
     public:
-        Timer();
+        LightMeter();
         void drawUI(lilka::Canvas *canvas);
 };
 
