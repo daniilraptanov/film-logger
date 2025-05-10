@@ -31,14 +31,14 @@ void LightMeter::drawUI(lilka::Canvas *canvas) {
     canvas->setTextSize(2);
     canvas->print(F("K."));
 
-    int luxValue = 1560;
     int maxLux = 100000;
-    int cctValue = 3200;
+    int luxValue = 2400;
+    int cctValue = 5200;
 
     int luxY = mapLuxToY(luxValue);
     int kelX = mapKelvinToX(cctValue);
 
-    drawCrosshair(canvas, luxY, kelX);
+    drawCrosshair(canvas, luxY, kelX, luxValue, cctValue);
     
     lilka::display.drawCanvas(canvas);
 }
@@ -88,16 +88,34 @@ void LightMeter::drawGradientKelvinBar(lilka::Canvas *canvas) {
     }
 }
 
-void LightMeter::drawCrosshair(lilka::Canvas *canvas, int luxY, int kelX) {
+void LightMeter::drawCrosshair(lilka::Canvas *canvas, int luxY, int kelX, int lux, int kelvin) {
     // горизонтальна лінія від правої межі шкали lux до точки перетину
     canvas->drawLine(LX_X + LX_W, luxY, kelX, luxY, lilka::colors::Green);
     // вертикальна лінія від верхньої межі шкали Kelvin до точки перетину
     canvas->drawLine(kelX, KY, kelX, luxY, lilka::colors::Green);
     // зелена точка у місці перетину
     canvas->fillCircle(kelX, luxY, 3, lilka::colors::Green);
+
+    // малюємо значення lux над точкою
+    canvas->setFont(FONT_6x12);
+    canvas->setTextSize(2);
+    canvas->setTextColor(lilka::colors::White);
+    // вирівнювання по центру за X
+    String luxStr = String(lux);
+    int16_t x1, y1;
+    uint16_t w, h;
+    canvas->getTextBounds(luxStr, 0, 0, &x1, &y1, &w, &h);
+    int16_t tw = w;
+    canvas->setCursor(kelX - tw/2, luxY - 10);
+    canvas->print(luxStr);
+
+    // малюємо значення Kelvin праворуч від точки
+    String kelStr = String(kelvin);
+    canvas->setCursor(kelX + 6, luxY + (KH/2) - 2);
+    canvas->print(kelStr);
 }
 
-float LightMeter::mapLuxToY(float lux) {
+int LightMeter::mapLuxToY(float lux) {
     // масив опорних значень люксів
     static constexpr int LUX_STOPS[] = {
         1,10,50,100,300,500,700,1000,3000,5000,7000,
@@ -120,6 +138,6 @@ float LightMeter::mapLuxToY(float lux) {
     
 };
 
-float LightMeter::mapKelvinToX(float kelvin) {
+int LightMeter::mapKelvinToX(float kelvin) {
     return KX + map(kelvin, 1800, 6600, 0, KW - 1);
 };
