@@ -11,6 +11,10 @@ class LightMeter : protected MenuComponent {
     private:
         void drawGradientLuxBar(lilka::Canvas *canvas);
         void drawGradientKelvinBar(lilka::Canvas *canvas);
+        void drawCrosshair(lilka::Canvas *canvas, int luxY, int kelX);
+
+        float mapLuxToY(float lux);
+        float mapKelvinToX(float kelvin);
 };
 
 #endif
