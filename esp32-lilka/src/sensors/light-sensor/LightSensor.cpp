@@ -28,7 +28,7 @@ float LightSensor::getCCT() {
     return calculateColorTemperature(r, g, b);
 }
 
-float LightSensor::calculateShutter(float &ev, int &iso, float &aperture) {
+float LightSensor::calculateShutter(float ev, int iso, float aperture) {
     return (pow(2, ev) * (iso / 100)) / pow(aperture, 2);
 }
 

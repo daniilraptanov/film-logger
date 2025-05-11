@@ -28,6 +28,7 @@ void loop() {
     lilka::Canvas canvas;
     lilka::State state = lilka::controller.getState();
 
+    float EV = lightSensor.getEV();
     lightSensor.printToSerial();
 
     if (!menu.isSelected()) {
@@ -38,7 +39,7 @@ void loop() {
     }
     else if (menu.isExposure()) {
         exposure.handleParameters(&state);
-        exposure.drawUI(&canvas);
+        exposure.drawUI(&canvas, EV, 2, lightSensor.calculateShutter(EV, exposure.getISO(), exposure.getAperture()));
     }
     menu.handleButtons(&state);
 }
