@@ -1,7 +1,7 @@
 #include <lilka.h>
-#include <fl-menu/FL_Menu.h>
-#include <light-meter/LightMeter.h>
-#include <exposure/Exposure.h>
+#include <ui/fl-menu/FL_Menu.h>
+#include <ui/light-meter/LightMeter.h>
+#include <ui/exposure/Exposure.h>
 
 FL_Menu menu;
 LightMeter lightMeter;
