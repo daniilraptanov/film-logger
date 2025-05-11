@@ -25,51 +25,47 @@ void Exposure::drawUI(lilka::Canvas *canvas) {
 
     // Film title
     // canvas->drawRect(10, 60, 260, 30, lilka::colors::White);
-    canvas->setTextColor(lilka::colors::White);
-    canvas->setCursor(20, 80);
-    canvas->print(String("<"));
-    canvas->setCursor(40, 80);
-    canvas->print(String("Kodak Vision3 500T"));
-    canvas->setCursor(250, 80);
-    canvas->print(String(">"));
+    // canvas->setTextColor(lilka::colors::White);
+    // canvas->setCursor(20, 80);
+    // canvas->print(String("<"));
+    // canvas->setCursor(40, 80);
+    // canvas->print(String("Kodak Vision3 500T"));
+    // canvas->setCursor(250, 80);
+    // canvas->print(String(">"));
 
     // Frame, Distance, Angle
     // canvas->drawRect(10, 110, 80, 30, lilka::colors::White);
-    canvas->setTextColor(lilka::colors::White);
-    canvas->setCursor(20, 130);
-    canvas->print(String("frame: 2"));
+    // canvas->setTextColor(lilka::colors::White);
+    // canvas->setCursor(20, 130);
+    // canvas->print(String("frame: 2"));
 
     // canvas->drawRect(100, 110, 80, 30, lilka::colors::White);
-    canvas->setTextColor(lilka::colors::White);
-    canvas->setCursor(110, 130);
-    canvas->print(String("42cm"));
+    // canvas->setTextColor(lilka::colors::White);
+    // canvas->setCursor(110, 130);
+    // canvas->print(String("42cm"));
 
     // canvas->drawRect(190, 110, 80, 30, lilka::colors::White);
-    canvas->setTextColor(lilka::colors::White);
-    canvas->setCursor(200, 130);
-    canvas->print(String("45 deg"));
+    // canvas->setTextColor(lilka::colors::White);
+    // canvas->setCursor(200, 130);
+    // canvas->print(String("45 deg"));
 
-    // EV, CCT
+    // EV
     // canvas->drawRect(10, 160, 130, 30, lilka::colors::White);
     canvas->setTextColor(lilka::colors::White);
     canvas->setCursor(20, 180);
     canvas->print(String("EV: 7.45"));
 
-    // canvas->drawRect(150, 160, 130, 30, lilka::colors::White);
-    canvas->setTextColor(lilka::colors::White);
-    canvas->setCursor(160, 180);
-    canvas->print(String("CCT: 5200K"));
 
     lilka::display.drawCanvas(canvas);
 }
 
 void Exposure::handleParameters(lilka::State *state) {
-    if (state->up.justPressed) {
+    if (state->right.justPressed) {
         selected =
             selected == FL_Parameter::NONE ? FL_Parameter::ISO :
             selected == FL_Parameter::ISO ? FL_Parameter::APERTURE :
             FL_Parameter::NONE; 
-    } else if (state->down.justPressed) {
+    } else if (state->left.justPressed) {
         selected =
             selected == FL_Parameter::APERTURE ? FL_Parameter::ISO :
             selected == FL_Parameter::ISO ? FL_Parameter::NONE :
@@ -77,10 +73,10 @@ void Exposure::handleParameters(lilka::State *state) {
     }
 
     if (selected == FL_Parameter::ISO) {
-        isoIndex = getNextIndex(isoIndex, ISO_SIZEOF, state->right.justPressed, state->left.justPressed);
+        isoIndex = getNextIndex(isoIndex, ISO_SIZEOF, state->up.justPressed, state->down.justPressed);
     }
     if (selected == FL_Parameter::APERTURE) {
-        apertureIndex = getNextIndex(apertureIndex, APERTURE_SIZEOF, state->right.justPressed, state->left.justPressed);
+        apertureIndex = getNextIndex(apertureIndex, APERTURE_SIZEOF, state->up.justPressed, state->down.justPressed);
     }
 }
 
