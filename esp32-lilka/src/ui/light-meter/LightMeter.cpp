@@ -16,7 +16,7 @@ static constexpr int KH = 20;
 LightMeter::LightMeter() : MenuComponent() {}
 
 
-void LightMeter::drawUI(lilka::Canvas *canvas) {
+void LightMeter::drawUI(lilka::Canvas *canvas, float lux, float cct) {
     drawCommonUI(canvas);
 
     drawGradientLuxBar(canvas);
@@ -32,13 +32,11 @@ void LightMeter::drawUI(lilka::Canvas *canvas) {
     canvas->print(F("K."));
 
     int maxLux = 100000;
-    int luxValue = 2400;
-    int cctValue = 5200;
 
-    int luxY = mapLuxToY(luxValue);
-    int kelX = mapKelvinToX(cctValue);
+    int luxY = mapLuxToY(lux);
+    int kelX = mapKelvinToX(cct);
 
-    drawCrosshair(canvas, luxY, kelX, luxValue, cctValue);
+    drawCrosshair(canvas, luxY, kelX, lux, cct);
     
     lilka::display.drawCanvas(canvas);
 }

@@ -10,6 +10,12 @@ void LightSensor::begin() {
     Serial.println(F("TCS34725 found!"));
 }
 
+float LightSensor::getLux() {
+    uint16_t r, g, b, c;
+    getRawData(&r, &g, &b, &c);
+    return calculateLux(r, g, b);
+}
+
 float LightSensor::getEV() {
     uint16_t r, g, b, c;
     getRawData(&r, &g, &b, &c);

@@ -6,7 +6,7 @@
 class LightMeter : protected MenuComponent {
     public:
         LightMeter();
-        void drawUI(lilka::Canvas *canvas);
+        void drawUI(lilka::Canvas *canvas, float lux, float cct);
 
     private:
         void drawGradientLuxBar(lilka::Canvas *canvas);
