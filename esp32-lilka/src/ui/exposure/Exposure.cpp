@@ -1,4 +1,4 @@
-#include <exposure/Exposure.h>
+#include <ui/exposure/Exposure.h>
 
 Exposure::Exposure() : MenuComponent() {
     selected = FL_Parameter::NONE;

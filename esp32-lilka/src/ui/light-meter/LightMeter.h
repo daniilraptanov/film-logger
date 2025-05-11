@@ -1,7 +1,7 @@
 #ifndef LIGHT_METER_H
 #define LIGHT_METER_H
 
-#include <menu-component/MenuComponent.h>
+#include <ui/menu-component/MenuComponent.h>
 
 class LightMeter : protected MenuComponent {
     public:

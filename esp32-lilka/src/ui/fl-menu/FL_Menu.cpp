@@ -1,4 +1,4 @@
-#include <fl-menu/FL_Menu.h>
+#include <ui/fl-menu/FL_Menu.h>
 
 FL_Menu::FL_Menu() : lilka::Menu("Вітаємо у Світогляді!") {}
 

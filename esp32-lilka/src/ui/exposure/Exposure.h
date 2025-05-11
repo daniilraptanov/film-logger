@@ -1,7 +1,7 @@
 #ifndef EXPOSURE_H
 #define EXPOSURE_H
 
-#include <menu-component/MenuComponent.h>
+#include <ui/menu-component/MenuComponent.h>
 
 enum class FL_Parameter {
     NONE,

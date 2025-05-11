@@ -1,4 +1,4 @@
-#include <light-meter/LightMeter.h>
+#include <ui/light-meter/LightMeter.h>
 
 // Lux bar
 static constexpr int LX_X = 25;

@@ -1,4 +1,4 @@
-#include <menu-component/MenuComponent.h>
+#include <ui/menu-component/MenuComponent.h>
 
 MenuComponent::MenuComponent() {}
 
