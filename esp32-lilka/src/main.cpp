@@ -28,7 +28,14 @@ void loop() {
     lilka::Canvas canvas;
     lilka::State state = lilka::controller.getState();
 
-    float EV = lightSensor.getEV();
+    float currentEV = lightSensor.getEV();
+    int iso = exposure.getISO();
+    float aperture = exposure.getAperture();
+    float shutter = lightSensor.calculateShutter(currentEV, iso, aperture);
+
+    float recommendedEvMin = lightSensor.calculateRecommendedEV(iso, aperture, 60); // TODO :: 1/500 need to be a setting
+    float recommendedEvMax = lightSensor.calculateRecommendedEV(iso, aperture, 500); // TODO :: 1/60 need to be a setting
+
     lightSensor.printToSerial();
 
     if (!menu.isSelected()) {
@@ -39,7 +46,13 @@ void loop() {
     }
     else if (menu.isExposure()) {
         exposure.handleParameters(&state);
-        exposure.drawUI(&canvas, EV, 2, lightSensor.calculateShutter(EV, exposure.getISO(), exposure.getAperture()));
+        exposure.drawUI(
+            &canvas, 
+            currentEV, 
+            recommendedEvMin,
+            recommendedEvMax,
+            shutter
+        );
     }
     menu.handleButtons(&state);
 }

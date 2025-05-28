@@ -32,6 +32,12 @@ float LightSensor::calculateShutter(float ev, int iso, float aperture) {
     return (pow(2, ev) * (iso / 100)) / pow(aperture, 2);
 }
 
+float LightSensor::calculateRecommendedEV(int iso, float aperture, float shutter) {
+    float numerator = shutter * pow(aperture, 2);
+    float denominator = iso / 100;
+    return log2(numerator / denominator);
+}
+
 
 /*
     Use this method only in testing mode!

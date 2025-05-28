@@ -4,7 +4,7 @@ Exposure::Exposure() : MenuComponent() {
     selected = FL_Parameter::NONE;
 }
 
-void Exposure::drawUI(lilka::Canvas *canvas, float currentEV, float recommendedEV, float shutter) {
+void Exposure::drawUI(lilka::Canvas *canvas, float currentEV, float recommendedEvMin, float recommendedEvMax, float shutter) {
     drawCommonUI(canvas);
     
     // ISO, F-stop, Shutter
@@ -19,9 +19,9 @@ void Exposure::drawUI(lilka::Canvas *canvas, float currentEV, float recommendedE
     canvas->setTextColor(lilka::colors::White);
     canvas->setCursor(20, 110);
     canvas->setTextColor(
-        evDifferenceOK(currentEV, recommendedEV) ? lilka::colors::Green :
-        evDifferenceWARN(currentEV, recommendedEV) ? lilka::colors::Orange :
-        evDifferenceCRIT(currentEV, recommendedEV) ? lilka::colors::Red :
+        evDifferenceOK(currentEV, recommendedEvMin, recommendedEvMax) ? lilka::colors::Green :
+        evDifferenceWARN(currentEV, recommendedEvMin, recommendedEvMax) ? lilka::colors::Orange :
+        evDifferenceCRIT(currentEV, recommendedEvMin, recommendedEvMax) ? lilka::colors::Red :
         lilka::colors::Gray_green
     );
     canvas->print(String("1/  ") + String(shutter));
@@ -63,7 +63,8 @@ void Exposure::drawUI(lilka::Canvas *canvas, float currentEV, float recommendedE
 
     // позиції поточного та рекомендованого EV
     int curX = EV_X + int((currentEV / float(EV_MAX)) * EV_W);
-    int recX = EV_X + int((recommendedEV / float(EV_MAX)) * EV_W);
+    int recMinX = EV_X + int((recommendedEvMin / float(EV_MAX)) * EV_W);
+    int recMaxX = EV_X + int((recommendedEvMax / float(EV_MAX)) * EV_W);
 
 
     canvas->fillRect(curX - tickTh,
@@ -73,7 +74,13 @@ void Exposure::drawUI(lilka::Canvas *canvas, float currentEV, float recommendedE
         lilka::colors::Red
     );
 
-    canvas->fillRect(recX - tickTh,
+    canvas->fillRect(recMinX - tickTh,
+        EV_Y - tickH,
+        tickTh * 2,
+        tickH * 2,
+        lilka::colors::Green
+    );
+    canvas->fillRect(recMaxX - tickTh,
         EV_Y - tickH,
         tickTh * 2,
         tickH * 2,
@@ -89,12 +96,20 @@ void Exposure::drawUI(lilka::Canvas *canvas, float currentEV, float recommendedE
         canvas->setCursor(curX - bw/2, EV_Y - bh/2);
         canvas->print(curStr);
     }
-    // рекомендований праворуч від зеленої риски
+    // рекомендований мінімальний від зеленої риски
     {
-        String recStr = String(recommendedEV, 1);
+        String recStr = String(recommendedEvMin, 1);
         int16_t bx, by; uint16_t bw, bh;
         canvas->getTextBounds(recStr, 0, 0, &bx, &by, &bw, &bh);
-        canvas->setCursor(recX + 4, EV_Y - bh/2);
+        canvas->setCursor(recMinX + 4, EV_Y - bh/2);
+        canvas->print(recStr);
+    }
+    // рекомендований максимальний від зеленої риски
+    {
+        String recStr = String(recommendedEvMax, 1);
+        int16_t bx, by; uint16_t bw, bh;
+        canvas->getTextBounds(recStr, 0, 0, &bx, &by, &bw, &bh);
+        canvas->setCursor(recMaxX + 4, EV_Y - bh/2);
         canvas->print(recStr);
     }
     lilka::display.drawCanvas(canvas);
@@ -149,12 +164,12 @@ float Exposure::getAperture() {
     return APERTURE_VALUES[apertureIndex];
 }
 
-bool Exposure::evDifferenceOK(float ev1, float ev2) {
-    return abs(ev1 - ev2) <= 1;
+bool Exposure::evDifferenceOK(float current, float min, float max) {
+    return (current > min) && (current < max);
 };
-bool Exposure::evDifferenceWARN(float ev1, float ev2) {
-    return abs(ev1 - ev2) == 1;
+bool Exposure::evDifferenceWARN(float current, float min, float max) {
+    return (current >= min) && (current <= max);
 };
-bool Exposure::evDifferenceCRIT(float ev1, float ev2) {
-    return abs(ev1 - ev2) > 1;
+bool Exposure::evDifferenceCRIT(float current, float min, float max) {
+    return (current < min) || (current > max);
 };

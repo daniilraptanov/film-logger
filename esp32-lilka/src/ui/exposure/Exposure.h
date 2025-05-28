@@ -12,14 +12,14 @@ enum class FL_Parameter {
 class Exposure : protected MenuComponent {
     public:
         Exposure();
-        void drawUI(lilka::Canvas *canvas, float currentEV, float recommendedEV, float shutter);
+        void drawUI(lilka::Canvas *canvas, float currentEV, float recommendedEvMin, float recommendedEvMax, float shutter);
         void handleParameters(lilka::State *state);
         int getISO();
         float getAperture();
 
-        bool evDifferenceOK(float ev1, float ev2);
-        bool evDifferenceWARN(float ev1, float ev2);
-        bool evDifferenceCRIT(float ev1, float ev2);
+        bool evDifferenceOK(float current, float min, float max);
+        bool evDifferenceWARN(float current, float min, float max);
+        bool evDifferenceCRIT(float current, float min, float max);
 
     private:
         int ISO_VALUES[16] = {0, 15, 50, 100, 200, 250, 400, 500, 600, 800, 1000, 1200, 1600, 1800, 3200, 6400};
