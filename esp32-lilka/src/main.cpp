@@ -7,6 +7,7 @@
 
 #define SDA_PIN 14
 #define SCL_PIN 13
+#define BUZZER_PIN 11
 
 // UI components
 FL_Menu menu;
@@ -21,6 +22,8 @@ void setup() {
     Wire.begin(SDA_PIN, SCL_PIN);
     menu.begin();
     lightSensor.begin();
+
+    pinMode(BUZZER_PIN, INPUT);
 }
 
 
