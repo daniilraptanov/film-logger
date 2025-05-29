@@ -20,15 +20,15 @@ void Logger::begin() {
 void Logger::handleLogging(lilka::State *state, int &iso, float &aperture, float &shutter, float &lux, float &cct, float &ev) {
     if (state->c.justPressed && mode == LoggerMode::STREAM) {
         mode = LoggerMode::SUSPENDED;
+        lilka::buzzer.play(lilka::NOTE_A4, 100);
         return;
     }
-    if (state->d.justPressed && mode == LoggerMode::SINGLE) {
-        mode = LoggerMode::SUSPENDED;
-        return;
+    if (state->c.justPressed && mode == LoggerMode::SUSPENDED) {
+        mode = LoggerMode::STREAM;
+        lilka::buzzer.play(lilka::NOTE_A7, 300);
     }
     
-    if (state->c.justPressed || mode == LoggerMode::STREAM) {
-        mode = LoggerMode::STREAM;
+    if (mode == LoggerMode::STREAM) {
         saveData(iso, aperture, shutter, lux, cct, ev);
 
         Serial.println("saved in a stream mode");
@@ -36,8 +36,10 @@ void Logger::handleLogging(lilka::State *state, int &iso, float &aperture, float
     } else if (state->d.justPressed && mode == LoggerMode::SUSPENDED) {
         mode = LoggerMode::SINGLE;
         saveData(iso, aperture, shutter, lux, cct, ev);
+        lilka::buzzer.play(lilka::NOTE_A4, 100);
 
         Serial.println("saved in a single mode");
+        mode = LoggerMode::SUSPENDED;
     }
 }
 
