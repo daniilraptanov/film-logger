@@ -1,6 +1,6 @@
 #include <ui/fl-menu/FL_Menu.h>
 
-FL_Menu::FL_Menu() : lilka::Menu("Вітаємо у Світогляді!") {}
+FL_Menu::FL_Menu() : lilka::Menu("Світогляд System") {}
 
 void FL_Menu::begin() {
     addItem("Світлометрія");

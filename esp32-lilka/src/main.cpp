@@ -4,6 +4,7 @@
 #include <ui/light-meter/LightMeter.h>
 #include <ui/exposure/Exposure.h>
 #include <sensors/light-sensor/LightSensor.h>
+#include <logger/Logger.h>
 
 #define SDA_PIN 14
 #define SCL_PIN 13
@@ -13,6 +14,7 @@
 FL_Menu menu;
 LightMeter lightMeter;
 Exposure exposure;
+Logger logger;
 
 // Sensors
 LightSensor lightSensor;
@@ -22,6 +24,7 @@ void setup() {
     Wire.begin(SDA_PIN, SCL_PIN);
     menu.begin();
     lightSensor.begin();
+    logger.begin();
 
     pinMode(BUZZER_PIN, INPUT);
 }
@@ -31,7 +34,10 @@ void loop() {
     lilka::Canvas canvas;
     lilka::State state = lilka::controller.getState();
 
+    float lux = lightSensor.getLux();
+    float cct = lightSensor.getCCT();
     float currentEV = lightSensor.getEV();
+
     int iso = exposure.getISO();
     float aperture = exposure.getAperture();
     float shutter = lightSensor.calculateShutter(currentEV, iso, aperture);
@@ -40,12 +46,13 @@ void loop() {
     float recommendedEvMax = lightSensor.calculateRecommendedEV(iso, aperture, 500); // TODO :: 1/60 need to be a setting
 
     lightSensor.printToSerial();
+    logger.handleLogging(&state, iso, aperture, shutter, lux, cct, currentEV);
 
     if (!menu.isSelected()) {
         menu.drawMenu(&canvas);
     }
     else if (menu.isLightMeter()) {
-        lightMeter.drawUI(&canvas, lightSensor.getLux(), lightSensor.getCCT());
+        lightMeter.drawUI(&canvas, lux, cct);
     }
     else if (menu.isExposure()) {
         exposure.handleParameters(&state);
