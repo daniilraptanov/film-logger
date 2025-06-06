@@ -1,9 +1,11 @@
 import { NavLink } from "react-router-dom";
+import FlashCameraButton from "./FlashCameraButton";
 
 const Header = () => {
     return (
         <header className="bg-gray-900 text-white shadow-md">
             <div className="container mx-auto px-4 py-4 flex flex-col items-center">
+                <FlashCameraButton />
                 <h1 className="text-2xl font-semibold tracking-wide mb-3 text-center">
                     Світогляд System | Web UI
                 </h1>
