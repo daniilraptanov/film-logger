@@ -1,6 +1,6 @@
 import { LightRecord } from "../domain/models/LightRecord";
 
-export const lightRecordsMock: LightRecord[] = Array.from({length: 10}, ((_, k) => {
+export const lightRecordsMock: LightRecord[] = Array.from({length: 2000}, ((_, k) => {
     return {
         iso: 100,
         aperture: 2.8,

@@ -92,7 +92,7 @@ const LogsTable: FC<LogsTableProps> = ({ records }) => {
             </div>
 
             {/* Pagination + PerPage */}
-            <div className="sticky bottom-4 bg-gray-900 mt-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="sticky bottom-4 bg-gray-700 mt-4 flex flex-col text-white shadow rounded max-w-6xl mx-auto px-4 py-3 sm:flex-row items-center justify-between gap-4">
                 <div className="flex items-center gap-2">
                     <span className="text-sm text-gray-300">Показувати по:</span>
                     <select
