@@ -1,10 +1,15 @@
 import Header from "../../shared/Header";
+import LoggingForm from "./LoggingForm";
+import SensorsForm from "./SensorsForm";
 
 const SettingsPage = () => {
     return (
         <>
             <Header />
-            тут будуть налаштування
+            <div className="flex flex-col md:flex-row gap-6 justify-center items-stretch p-6">
+                <SensorsForm />
+                <LoggingForm />
+            </div>
         </>
     );
 };
