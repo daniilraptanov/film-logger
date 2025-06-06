@@ -1,13 +1,16 @@
 import { Route, Routes } from "react-router-dom";
+import LogsPage from "./pages/logs-page/LogsPage";
+import ChartsPage from "./pages/charts-page/ChartsPage";
+import SettingsPage from "./pages/settings-page/SettingsPage";
 
 const App = () => {
     return (
         <Routes>
-            <Route path="/" element={<MainPage />}>
-                <Route index element={<PatientsTable patients={patients} />} />
-                <Route path="form/:formId" element={<FormSection />} />
-            </Route>
-            <Route path="*" element={<h1>404</h1>} />
+            <Route path="/" element={<LogsPage />} />
+            <Route path="/logs" element={<LogsPage />} />
+            <Route path="/charts" element={<ChartsPage />} />
+            <Route path="/settings" element={<SettingsPage />} />
+            <Route path="*" element={<h1>На жаль сторінку не знайдено</h1>} />
         </Routes>
     );
 };
