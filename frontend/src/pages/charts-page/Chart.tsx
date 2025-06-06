@@ -1,13 +1,10 @@
 import { FC, useState } from "react";
 import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { LightRecord } from "../../domain/models/LightRecord";
+import { CHART_FIELDS, FieldKey, LightRecord } from "../../domain/models/LightRecord";
 
 interface ChartProps {
     records: LightRecord[]
 }
-
-const CHART_FIELDS = ["iso", "aperture", "shutter", "lux", "cct", "ev"] as const;
-type FieldKey = (typeof CHART_FIELDS)[number];
 
 const Chart: FC<ChartProps> = (props) => {
     const [xKey, setXKey] = useState<FieldKey>("lux");
