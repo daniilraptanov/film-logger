@@ -35,7 +35,7 @@ const SensorsForm = () => {
             </div>
             <button
                 type="submit"
-                className="self-center bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded"
+                className="self-center bg-green-700 hover:bg-green-600 text-white py-2 px-4 rounded"
             >
                 Зберегти
             </button>

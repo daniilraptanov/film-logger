@@ -25,7 +25,7 @@ const LoggingForm = () => {
             </div>
             <button
                 type="submit"
-                className="self-center mt-auto bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded"
+                className="self-center mt-auto bg-green-700 hover:bg-green-600 text-white py-2 px-4 rounded"
             >
                 Зберегти
             </button>

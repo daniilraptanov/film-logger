@@ -15,7 +15,7 @@ const Header = () => {
                         className={({ isActive }) =>
                             `px-4 py-2 rounded transition-all ${
                                 isActive
-                                    ? "bg-blue-600 text-white"
+                                    ? "bg-green-900 hover:bg-green-600 text-white"
                                     : "bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white"
                             }`
                         }
@@ -27,7 +27,7 @@ const Header = () => {
                         className={({ isActive }) =>
                             `px-4 py-2 rounded transition-all ${
                                 isActive
-                                    ? "bg-blue-600 text-white"
+                                    ? "bg-green-900 hover:bg-green-600 text-white"
                                     : "bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white"
                             }`
                         }
@@ -39,7 +39,7 @@ const Header = () => {
                         className={({ isActive }) =>
                             `px-4 py-2 rounded transition-all ${
                                 isActive
-                                    ? "bg-blue-600 text-white"
+                                    ? "bg-green-900 hover:bg-green-600 text-white"
                                     : "bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white"
                             }`
                         }

@@ -6,7 +6,7 @@ const SettingsPage = () => {
     return (
         <>
             <Header />
-            <div className="flex flex-col md:flex-row gap-6 justify-center items-stretch p-6">
+            <div className="settings-page flex flex-col md:flex-row gap-6 justify-center items-stretch p-6">
                 <SensorsForm />
                 <LoggingForm />
             </div>
