@@ -14,3 +14,19 @@ body,
         margin: 0;
     }
 }
+
+body {
+    @apply bg-gradient-to-br from-purple-900 via-indigo-900 to-black;
+    background-size: 800% 800%;
+    animation: gradientFlow 15s ease infinite;
+}
+
+@keyframes gradientFlow {
+    0%   { background-position:   0% 50%; }
+    25%  { background-position:  50% 25%; }
+    50%  { background-position: 100% 50%; }
+    75%  { background-position:  50% 75%; }
+    100% { background-position:   0% 50%; }
+}
+
+
