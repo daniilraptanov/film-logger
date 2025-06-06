@@ -5,4 +5,5 @@ export interface LightRecord {
     lux: number;
     cct: number;
     ev: number;
+    datetime: string;
 }
