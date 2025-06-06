@@ -6,7 +6,7 @@ const FlashCameraButton = () => {
 
     const handleFlash = () => {
         setFlash(true);
-        setTimeout(() => setFlash(false), 300);
+        setTimeout(() => setFlash(false), 800);
     };
 
     return (
