@@ -1,0 +1,49 @@
+{
+  "name": "film-logger-backend",
+  "version": "1.0.0",
+  "description": "",
+  "nodemonConfig": {
+    "watch": [
+      "server"
+    ],
+    "ext": "ts",
+    "ignore": [
+      "*.test.ts"
+    ],
+    "delay": "3",
+    "execMap": {
+      "ts": "ts-node"
+    }
+  },
+  "main": "dist/app.js",
+  "scripts": {
+    "start": "tsc && node dist/app.js",
+    "dev": "nodemon --config nodemon.json src/app.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daniilraptanov/film-logger.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/daniilraptanov/film-logger/issues"
+  },
+  "homepage": "https://github.com/daniilraptanov/film-logger#readme",
+  "dependencies": {
+    "@prisma/client": "^5.9.1",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "http-status-codes": "^2.3.0",
+    "joi": "^17.12.1",
+    "sass-embedded": "^1.89.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "nodemon": "^3.0.3",
+    "prisma": "^5.9.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}
