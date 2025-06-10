@@ -7,63 +7,34 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model User {
+
+model LightRecord {
   id        String   @id @default(uuid()) @db.Uuid
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  login    String @unique @db.VarChar(255)
-  password String @db.VarChar(255)
-
-  auctions Auction[]
-  rates    Rate[]
-  images   Image[]
+  iso       Int
+  aperture  Float
+  shutter   Float
+  lux       Float
+  cct       Float
+  ev        Float 
 }
 
-model Auction {
-  id        String   @id @default(uuid()) @db.Uuid
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Sensor {
+  id              String   @id @default(uuid()) @db.Uuid
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
-  description String @db.Text
-  status      Int    @db.SmallInt()
-
-  userId String @db.Uuid
-  user   User   @relation(fields: [userId], references: [id])
-
-  lastRateId String? @unique @db.Uuid
-  lastRate   Rate?   @relation(name: "LastRate", fields: [lastRateId], references: [id])
-
-  images Image[]
-  rates  Rate[]
+  type            Int      @db.SmallInt @unique
+  gain            Int
+  integrationTime Int
 }
 
-model Image {
-  id        String   @id @default(uuid()) @db.Uuid
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Logging {
+  id                String   @id @default(uuid()) @db.Uuid
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 
-  source String @db.Text
-
-  userId String @db.Uuid
-  user   User   @relation(fields: [userId], references: [id])
-
-  auctionId String  @db.Uuid
-  auction   Auction @relation(fields: [auctionId], references: [id])
-}
-
-model Rate {
-  id        String   @id @default(uuid()) @db.Uuid
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  rate Float @db.DoublePrecision
-
-  userId String @db.Uuid
-  user   User   @relation(fields: [userId], references: [id])
-
-  auctionId String  @db.Uuid
-  auction   Auction @relation(fields: [auctionId], references: [id])
-
-  lastRateAuction Auction? @relation(name: "LastRate")
+  streamIntervalSec Int
 }
