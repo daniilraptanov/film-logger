@@ -20,6 +20,9 @@
     "start": "tsc && node dist/app.js",
     "dev": "nodemon --config nodemon.json src/app.ts"
   },
+  "prisma": {
+    "seed": "npx ts-node prisma/seed.ts"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/daniilraptanov/film-logger.git"

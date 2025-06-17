@@ -11,3 +11,6 @@
 1. run < npx prisma migrate dev --name migration_name >
 2. run < npx prisma generate >
 
+## Seeds for the database
+1. run < npx prisma db seed >
+
