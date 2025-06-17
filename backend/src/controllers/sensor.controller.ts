@@ -22,7 +22,7 @@ export class SensorController {
     }
 
     @logger
-    static async getSensors(req: Request, res: Response) {
+    static async getSensors(_req: Request, res: Response) {
         const sensorService = sensorServiceFactory();
         const sensorMapper = sensorMapperFactory();
 

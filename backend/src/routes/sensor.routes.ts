@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { validateParams } from "../middleware/validate-params.middleware";
-import { paginationSchema } from "../schemas/pagination.schemas";
 import { sensorSchema } from "../schemas/sensor.schemas";
 import { SensorController } from "../controllers/sensor.controller";
 
