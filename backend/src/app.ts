@@ -1,7 +1,7 @@
 import express from "express";
 import { Config } from "./config";
 import { auth } from "./middleware/auth.middleware";
-import { AuctionsRouter } from "./routes/auctions.routes";
+import { AuctionsRouter } from "./routes/light-record.routes";
 import { ImagesRouter } from "./routes/images.routes";
 import { RatesRouter } from "./routes/rates.routes";
 import { AuthRouter } from "./routes/user-auth.routes";

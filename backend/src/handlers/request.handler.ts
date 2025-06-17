@@ -1,16 +1,6 @@
 import { Request } from "express";
-import { IAuctionModel } from "../domain/auction.type";
-import { IUserDTO } from "../domain/dto/user.dto";
 
 export class ApiRequest {
-    static getUserDTO(req: Request): IUserDTO {
-        return req["userDTO"];
-    }
-
-    static setUserDTO(req: Request, userDTO: IUserDTO) {
-        req["userDTO"] = userDTO;
-    }
-
     static getValidatedParams(req: Request) {
         return req["validatedParams"];
     }
@@ -19,11 +9,11 @@ export class ApiRequest {
         req["validatedParams"] = params;
     }
 
-    static getAuction(req: Request): IAuctionModel {
-        return req["auction"];
+    static getValidatedCSV(req: Request) {
+        return req["validatedCSV"];
     }
 
-    static setAuction(req: Request, auction: IAuctionModel) {
-        req["auction"] = auction;
+    static setValidatedCSV(req: Request, params) {
+        req["validatedCSV"] = params;
     }
 }

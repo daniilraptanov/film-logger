@@ -1,0 +1,10 @@
+import Joi from "joi";
+
+export const simpleLightRecordSchema = Joi.object().keys({
+    iso: Joi.number().required(),
+    aperture: Joi.number().required(),
+    shutter: Joi.number().required(),
+    lux: Joi.number().required(),
+    cct: Joi.number().required(),
+    ev: Joi.number().required(),
+});
