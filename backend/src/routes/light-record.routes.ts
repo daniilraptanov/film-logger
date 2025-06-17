@@ -7,7 +7,7 @@ import { LightRecordController } from "../controllers/light-record.controller";
 const LightRecordRouter = Router();
 
 LightRecordRouter.post(
-  "/",
+  "/import-csv",
   validateCSV(simpleLightRecordSchema),
   LightRecordController.importCSV
 );

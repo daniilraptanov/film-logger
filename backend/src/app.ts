@@ -1,10 +1,6 @@
 import express from "express";
 import { Config } from "./config";
-import { auth } from "./middleware/auth.middleware";
-import { AuctionsRouter } from "./routes/light-record.routes";
-import { ImagesRouter } from "./routes/images.routes";
-import { RatesRouter } from "./routes/rates.routes";
-import { AuthRouter } from "./routes/user-auth.routes";
+import { LightRecordRouter } from "./routes/light-record.routes";
 
 const cors = require("cors");
 
@@ -17,14 +13,7 @@ app.use(cors());
 app.use(express.json({ limit: `${Config.app.JSON_LIMIT_MB}mb` }));
 
 // Public routes
-app.use(`${API_V1}/auth`, AuthRouter);
-
-// Need authorization
-app.use(API_V1, auth);
-app.use(`${API_V1}/auctions`, AuctionsRouter);
-app.use(`${API_V1}/rates`, RatesRouter);
-// app.use(`${API_V1}/images`, ImagesRouter);
-
+app.use(`${API_V1}/light-records`, LightRecordRouter);
 
 app.listen(Config.app.PORT, () => {
   try {

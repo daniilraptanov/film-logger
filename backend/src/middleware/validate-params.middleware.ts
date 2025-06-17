@@ -3,7 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import { ObjectSchema } from "joi";
 import { ApiRequest } from "../handlers/request.handler";
 import { sendResponse } from "../handlers/response.handler";
-import { parse } from "csv-parse/.";
+import { parse } from "csv-parse";
 
 export const validateParams = (schema: ObjectSchema) => {
   return (req: Request, res: Response, next: NextFunction) => {
