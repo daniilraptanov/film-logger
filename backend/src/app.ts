@@ -1,6 +1,7 @@
 import express from "express";
 import { Config } from "./config";
 import { LightRecordRouter } from "./routes/light-record.routes";
+import { SensorRouter } from "./routes/sensor.routes";
 
 const cors = require("cors");
 
@@ -14,6 +15,7 @@ app.use(express.json({ limit: `${Config.app.JSON_LIMIT_MB}mb` }));
 
 // Public routes
 app.use(`${API_V1}/light-records`, LightRecordRouter);
+app.use(`${API_V1}/sensors`, SensorRouter);
 
 app.listen(Config.app.PORT, () => {
   try {

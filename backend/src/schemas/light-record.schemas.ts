@@ -1,6 +1,6 @@
 import Joi from "joi";
 
-export const simpleLightRecordSchema = Joi.object().keys({
+export const lightRecordSchema = Joi.object().keys({
     iso: Joi.number().required(),
     aperture: Joi.number().required(),
     shutter: Joi.number().required(),
