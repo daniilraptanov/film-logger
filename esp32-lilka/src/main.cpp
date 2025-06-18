@@ -28,21 +28,16 @@ void setup() {
     lilka::begin();
     controller.begin();
     Wire.begin(SDA_PIN, SCL_PIN);
-    menu.begin();
+    menu.begin(&controller);
     lightSensor.begin();
     logger.begin();
 
     pinMode(BUZZER_PIN, INPUT);
 }
 
-void setMenuSelected(bool state) {
-    menu.setSelected(state);
-}
-
 void loop() {
     lilka::Canvas canvas;
     lilka::State state = lilka::controller.getState();
-    controller.setHandler(lilka::Button::START, setMenuSelected);
 
     float lux = lightSensor.getLux();
     float cct = lightSensor.getCCT();

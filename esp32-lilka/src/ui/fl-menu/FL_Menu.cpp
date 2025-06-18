@@ -2,10 +2,21 @@
 
 FL_Menu::FL_Menu() : lilka::Menu("Світогляд System") {}
 
-void FL_Menu::begin() {
+static FL_Menu* currentMenuInstance = nullptr;
+
+static void staticSetSelected(bool state) {
+    if (currentMenuInstance) {
+        currentMenuInstance->setSelected(state);
+    }
+}
+
+void FL_Menu::begin(lilka::Controller *controller) {
     addItem("Світлометрія");
     addItem("Експозиція");
     addItem("Мережа");
+
+    currentMenuInstance = this;
+    controller->setHandler(lilka::Button::START, staticSetSelected);
 }
 
 void FL_Menu::drawMenu(lilka::Canvas *canvas) {

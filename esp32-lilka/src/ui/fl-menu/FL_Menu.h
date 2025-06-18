@@ -13,10 +13,10 @@ enum class FL_Menu_Enum {
 class FL_Menu : private lilka::Menu {
     public:
         FL_Menu();
-        void begin();
+        void begin(lilka::Controller *controller);
         void drawMenu(lilka::Canvas *canvas);
-        void setSelected(bool state);
         bool isSelected();
+        void setSelected(bool state);
 
         bool isLightMeter();
         bool isExposure();
