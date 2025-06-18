@@ -5,7 +5,7 @@ FL_Menu::FL_Menu() : lilka::Menu("Світогляд System") {}
 void FL_Menu::begin() {
     addItem("Світлометрія");
     addItem("Експозиція");
-    addItem("WiFi-мережа");
+    addItem("Мережа");
 }
 
 void FL_Menu::drawMenu(lilka::Canvas *canvas) {
@@ -17,10 +17,8 @@ void FL_Menu::drawMenu(lilka::Canvas *canvas) {
     selected = true;
 }
 
-void FL_Menu::handleButtons(lilka::State *state) {
-    if (state->start.justPressed) {
-        selected = false;
-    }
+void FL_Menu::setSelected(bool state) {
+    selected = state;
 }
 
 bool FL_Menu::isSelected() {

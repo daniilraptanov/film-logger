@@ -21,8 +21,12 @@ Logger logger;
 // Sensors
 LightSensor lightSensor;
 
+// Lilka modules
+lilka::Controller controller;
+
 void setup() {
     lilka::begin();
+    controller.begin();
     Wire.begin(SDA_PIN, SCL_PIN);
     menu.begin();
     lightSensor.begin();
@@ -31,10 +35,14 @@ void setup() {
     pinMode(BUZZER_PIN, INPUT);
 }
 
+void setMenuSelected(bool state) {
+    menu.setSelected(state);
+}
 
 void loop() {
     lilka::Canvas canvas;
     lilka::State state = lilka::controller.getState();
+    controller.setHandler(lilka::Button::START, setMenuSelected);
 
     float lux = lightSensor.getLux();
     float cct = lightSensor.getCCT();
@@ -69,5 +77,4 @@ void loop() {
     else if (menu.isWiFiConfig()) {
         wifiConfig.drawUI(&canvas);
     }
-    menu.handleButtons(&state);
 }

@@ -10,7 +10,7 @@ void WiFiConfig::begin() {
 void WiFiConfig::drawUI(lilka::Canvas *canvas) {
     drawCommonUI(canvas);
 
-    lilka::ProgressDialog progress("Мережа", "Зачекайте, йде підключення до WiFi мережі");
+    lilka::ProgressDialog progress("WiFi-мережа", "Зачекайте, йде підключення до мережі WiFi...");
     int attempts = 0;
     while ((WiFi.status() != WL_CONNECTED) && (attempts < maxAttempts)) {
         begin();
@@ -30,6 +30,4 @@ void WiFiConfig::drawUI(lilka::Canvas *canvas) {
     }
     progress.draw(canvas);
     lilka::display.drawCanvas(canvas);
-
-    delay(5000);
 }
