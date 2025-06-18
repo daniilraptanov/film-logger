@@ -6,6 +6,7 @@
 enum class FL_Menu_Enum {
     LIGHT_METER,
     EXPOSURE,
+    WIFI_CONFIG,
 };
   
 
@@ -19,6 +20,7 @@ class FL_Menu : private lilka::Menu {
 
         bool isLightMeter();
         bool isExposure();
+        bool isWiFiConfig();
 
     private:
         lilka::Canvas *canvas;

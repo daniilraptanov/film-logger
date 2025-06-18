@@ -5,6 +5,7 @@ FL_Menu::FL_Menu() : lilka::Menu("Світогляд System") {}
 void FL_Menu::begin() {
     addItem("Світлометрія");
     addItem("Експозиція");
+    addItem("WiFi-мережа");
 }
 
 void FL_Menu::drawMenu(lilka::Canvas *canvas) {
@@ -36,3 +37,7 @@ bool FL_Menu::isExposure() {
     return index == static_cast<int>(FL_Menu_Enum::EXPOSURE);
 }
 
+bool FL_Menu::isWiFiConfig() {
+    int index = getCursor();
+    return index == static_cast<int>(FL_Menu_Enum::WIFI_CONFIG);
+}

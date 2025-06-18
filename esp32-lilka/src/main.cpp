@@ -3,6 +3,7 @@
 #include <ui/fl-menu/FL_Menu.h>
 #include <ui/light-meter/LightMeter.h>
 #include <ui/exposure/Exposure.h>
+#include <ui/wifi-config/WiFiConfig.h>
 #include <sensors/light-sensor/LightSensor.h>
 #include <logger/Logger.h>
 
@@ -14,6 +15,7 @@
 FL_Menu menu;
 LightMeter lightMeter;
 Exposure exposure;
+WiFiConfig wifiConfig;
 Logger logger;
 
 // Sensors
@@ -63,6 +65,9 @@ void loop() {
             recommendedEvMax,
             shutter
         );
+    }
+    else if (menu.isWiFiConfig()) {
+        wifiConfig.drawUI(&canvas);
     }
     menu.handleButtons(&state);
 }
