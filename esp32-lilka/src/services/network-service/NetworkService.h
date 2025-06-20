@@ -10,12 +10,13 @@ class NetworkService {
     public:
         NetworkService();
 
-        String get(const __FlashStringHelper* suburl);
-        String post(const __FlashStringHelper* suburl, const std::string& data);
-        String patch(const __FlashStringHelper* suburl, const std::string& data);
+        String get(String suburl);
+        String post(String suburl, const std::string& data);
+        String patch(String suburl, const std::string& data);
+        String encodeURL(String str);
 
     private:
-        String getURL(const __FlashStringHelper* suburl);
+        String getURL(String suburl);
 };
 
 #endif
