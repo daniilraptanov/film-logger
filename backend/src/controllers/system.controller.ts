@@ -8,6 +8,6 @@ export class SystemController {
     @logger
     static async checkConnection(req: Request, res: Response) {        
         const { data } = ApiRequest.getValidatedParams(req) as { data: string };
-        sendResponse(res, StatusCodes.OK, data);    
+        sendResponse(res, StatusCodes.OK, "Welcome to FilmLogger API!", data);    
     }
 }
