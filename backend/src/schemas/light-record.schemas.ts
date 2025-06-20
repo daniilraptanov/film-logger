@@ -8,3 +8,7 @@ export const lightRecordSchema = Joi.object().keys({
     cct: Joi.number().required(),
     ev: Joi.number().required(),
 });
+
+export const lightRecordListSchema = Joi.object().keys({
+    data: Joi.array().items(lightRecordSchema).min(1).max(100).required(),
+});

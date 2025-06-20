@@ -9,10 +9,10 @@ import { lightRecordMapperFactory } from "../mappers/light-record.mapper";
 
 export class LightRecordController {
     @logger
-    static async importCSV(req: Request, res: Response) {
+    static async importRecords(req: Request, res: Response) {
         const lightRecordService = lightRecordServiceFactory();
         
-        const data: ILightRecordDTO[] = ApiRequest.getValidatedCSV(req);
+        const { data } = ApiRequest.getValidatedParams(req) as { data: ILightRecordDTO[] };
         const saved = await lightRecordService.saveRecords(data);
         if (!saved) {
             return sendResponse(res, StatusCodes.INTERNAL_SERVER_ERROR, "LightRecords was not saved.");

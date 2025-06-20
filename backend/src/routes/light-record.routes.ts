@@ -1,15 +1,15 @@
 import { Router } from "express";
-import { validateCSV, validateParams } from "../middleware/validate-params.middleware";
+import { validateParams } from "../middleware/validate-params.middleware";
 import { paginationSchema } from "../schemas/pagination.schemas";
-import { lightRecordSchema } from "../schemas/light-record.schemas";
+import { lightRecordListSchema } from "../schemas/light-record.schemas";
 import { LightRecordController } from "../controllers/light-record.controller";
 
 const LightRecordRouter = Router();
 
 LightRecordRouter.post(
-  "/import-csv",
-  validateCSV(lightRecordSchema),
-  LightRecordController.importCSV
+  "/import",
+  validateParams(lightRecordListSchema),
+  LightRecordController.importRecords
 );
 
 LightRecordRouter.get(
