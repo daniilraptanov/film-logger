@@ -19,7 +19,7 @@
   "scripts": {
     "start": "tsc && node dist/app.js",
     "dev": "nodemon --config nodemon.json src/app.ts",
-    "ngrok": "dev & ngrok http http://localhost:5000 --scheme http  "
+    "ngrok": "npm run dev & ngrok http http://localhost:5000 --scheme http  "
   },
   "prisma": {
     "seed": "npx ts-node prisma/seed.ts"
