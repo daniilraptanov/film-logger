@@ -5,6 +5,7 @@
 #include <lilka.h>
 #include <.secrets.h>
 #include <ui/menu-component/MenuComponent.h>
+#include <services/network-service/NetworkService.h>
 
 class WiFiConfig : protected MenuComponent {
     public:
