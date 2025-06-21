@@ -5,7 +5,9 @@ APIService::APIService() {
 }
 
 String APIService::checkConnection() {
-    return networkService.get(
+    JsonDocument result = networkService.get(
         "/api/v1/system?data=" + networkService.encodeURL("Пристрій підключено до серверу")
     );
+    Serial.println(networkService.getMessage(result));
+    return networkService.getData(result).as<String>();
 }

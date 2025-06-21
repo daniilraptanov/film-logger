@@ -29,13 +29,32 @@ String NetworkService::encodeURL(String str) {
   return encoded;
 }
 
+JsonDocument NetworkService::jsonify(String& response) {
+    JsonDocument doc;
+    DeserializationError error = deserializeJson(doc, response);
+    if (error || (response.length() == 0)) {
+        JsonDocument fallback;
+        fallback["message"] = "error";
+        fallback.createNestedObject("data");
+        return fallback;
+    }
+    return doc;
+}
 
-String NetworkService::get(String suburl) {
+String NetworkService::getMessage(JsonDocument& doc) {
+    return doc["message"];
+}
+
+JsonDocument NetworkService::getData(JsonDocument& doc) {
+    return doc["data"];
+}
+
+JsonDocument NetworkService::get(String suburl) {
     HTTPClient http;
     String response = "";
 
     if (WiFi.status() != WL_CONNECTED) {
-        return response;
+        return jsonify(response);
     }
 
     if (http.begin(getURL(suburl))) {
@@ -45,10 +64,10 @@ String NetworkService::get(String suburl) {
         }
         http.end();
     }
-    return response;
+    return jsonify(response);
 }
 
-String NetworkService::post(String suburl, const std::string& data) {
+JsonDocument NetworkService::post(String suburl, const std::string& data) {
     // HTTPClient http;
     // String response = "";
 
@@ -67,7 +86,7 @@ String NetworkService::post(String suburl, const std::string& data) {
     // return response;
 }
 
-String NetworkService::patch(String suburl, const std::string& data) {
+JsonDocument NetworkService::patch(String suburl, const std::string& data) {
     // HTTPClient http;
     // String response = "";
 
