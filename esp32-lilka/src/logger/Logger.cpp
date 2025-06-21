@@ -13,8 +13,33 @@ void Logger::begin() {
     if (!file) {
         Serial.println(F("Failed to open file..."));
     };
-    file.println("iso" + dataSeparator + "aperture" + dataSeparator + "shutter" + dataSeparator + "lux" + dataSeparator + "cct" + dataSeparator + "ev");
+    if (file && file.size() == 0) {
+        file.println(getHeader());
+    }
     file.close();
+}
+
+String Logger::getHeader() {
+    return "iso" + dataSeparator + 
+           "aperture" + dataSeparator + 
+           "shutter" + dataSeparator + 
+           "lux" + dataSeparator + 
+           "cct" + dataSeparator + 
+           "ev" + dataSeparator +
+           "synced";
+}
+
+String Logger::getColumnName(size_t index) {
+    switch (index) {
+        case 0: return "iso";
+        case 1: return "aperture";
+        case 2: return "shutter";
+        case 3: return "lux";
+        case 4: return "cct";
+        case 5: return "ev";
+        case 6: return "synced";
+        default: return "";
+    }
 }
 
 void Logger::handleLogging(lilka::State *state, int &iso, float &aperture, float &shutter, float &lux, float &cct, float &ev) {
@@ -48,6 +73,56 @@ void Logger::saveData(int &iso, float &aperture, float &shutter, float &lux, flo
     if (!file) {
         Serial.println(F("Failed to log data..."));
     };
-    file.println(iso + dataSeparator + aperture + dataSeparator + shutter + dataSeparator + lux + dataSeparator + cct + dataSeparator + ev);
+    file.println(
+        iso + dataSeparator + 
+        aperture + dataSeparator + 
+        shutter + dataSeparator + 
+        lux + dataSeparator + 
+        cct + dataSeparator + 
+        ev + dataSeparator +
+        0
+    );
     file.close();
 }
+
+JsonDocument Logger::readRecords(size_t limit) {
+    File file = SD.open(fileName, FILE_READ);
+    JsonDocument doc;
+    JsonArray array = doc.to<JsonArray>();
+
+    if (!file) {
+        Serial.println(F("Failed to read data..."));
+        return doc;
+    };
+
+
+    size_t count = 0;
+    String line;
+    while (file.available() && (limit == 0 || count < limit)) {
+        line = file.readStringUntil('\n');
+        line.trim();
+
+        if ((line.length() == 0) || (line == getHeader())) continue;
+
+        JsonObject row;
+        int lastIndex = 0;
+        int sepIndex = 0;
+        for (int i = 0; i < columns; ++i) {
+            sepIndex = line.indexOf(dataSeparator, lastIndex);
+            String value;
+            if (sepIndex == -1) {
+            value = line.substring(lastIndex);
+            } else {
+            value = line.substring(lastIndex, sepIndex);
+            lastIndex = sepIndex + dataSeparator.length();
+            }
+            row[getColumnName(i)] = value;
+            array.add(row);
+        }
+        count++;
+    }
+
+    file.close();
+    return doc;
+}
+

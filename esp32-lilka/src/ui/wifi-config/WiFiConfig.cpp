@@ -7,6 +7,15 @@ void WiFiConfig::begin() {
     WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
 }
 
+void WiFiConfig::syncData() {
+    // TODO
+
+    APIService apiService;
+    Logger logger;
+
+    logger.readRecords(10);
+}
+
 void WiFiConfig::drawUI(lilka::Canvas *canvas) {
     drawCommonUI(canvas);
 
@@ -34,6 +43,9 @@ void WiFiConfig::drawUI(lilka::Canvas *canvas) {
     } else {
         progress.setMessage("Помилка підключення :(");
     }
+
+    syncData(); // TODO
+
     progress.draw(canvas);
     lilka::display.drawCanvas(canvas);
 }

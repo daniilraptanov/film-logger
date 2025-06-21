@@ -6,6 +6,7 @@
 #include <.secrets.h>
 #include <ui/menu-component/MenuComponent.h>
 #include <services/api-service/APIService.h>
+#include <logger/Logger.h>
 
 class WiFiConfig : protected MenuComponent {
     public:
@@ -14,6 +15,7 @@ class WiFiConfig : protected MenuComponent {
     
     private:
         void begin();
+        void syncData();
         int maxAttempts = 100;
 };
 
