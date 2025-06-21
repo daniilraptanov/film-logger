@@ -20,26 +20,21 @@ void Logger::begin() {
 }
 
 String Logger::getHeader() {
-    return "iso" + dataSeparator + 
-           "aperture" + dataSeparator + 
-           "shutter" + dataSeparator + 
-           "lux" + dataSeparator + 
-           "cct" + dataSeparator + 
-           "ev" + dataSeparator +
-           "synced";
+    String header;
+    for (size_t i = 0; i < columns; ++i) {
+        header += columnNames[i];
+        if (i < columns - 1) {
+            header += dataSeparator;
+        }
+    }
+    return header;
 }
 
 String Logger::getColumnName(size_t index) {
-    switch (index) {
-        case 0: return "iso";
-        case 1: return "aperture";
-        case 2: return "shutter";
-        case 3: return "lux";
-        case 4: return "cct";
-        case 5: return "ev";
-        case 6: return "synced";
-        default: return "";
+    if (index < columns) {
+        return columnNames[index];
     }
+    return "";
 }
 
 void Logger::handleLogging(lilka::State *state, int &iso, float &aperture, float &shutter, float &lux, float &cct, float &ev) {

@@ -21,7 +21,9 @@ class Logger {
     private:
         String fileName = "/fl_logs.csv";
         String dataSeparator = F(",");
-        size_t columns = 7;
+
+        const char* columnNames[7] = {"iso", "aperture", "shutter", "lux", "cct", "ev", "synced"};
+        size_t columns = sizeof(columnNames) / sizeof(columnNames[0]);
 
         LoggerMode mode = LoggerMode::SUSPENDED;
 
