@@ -23,11 +23,8 @@ void WiFiConfig::drawUI(lilka::Canvas *canvas) {
         attempts++;
     }
     if (WiFi.status() == WL_CONNECTED) {
-        NetworkService networkService;
-
-        String result = networkService.get(
-            "/api/v1/system?data=" + networkService.encodeURL("Пристрій підключено до серверу")
-        );
+        APIService apiService;
+        String result = apiService.checkConnection();
         progress.setProgress(maxAttempts);
         if (result.length() == 0) {
             progress.setMessage("Пристрій підключено до мережі, але сервер недоступний");
