@@ -13,10 +13,14 @@ void Logger::begin() {
     if (!file) {
         Serial.println(F("Failed to open file..."));
     };
-    if (file && file.size() == 0) {
+    if (file.size() == 0) {
         file.println(getHeader());
     }
     file.close();
+}
+
+bool Logger::synced(String &columnName, String &value) {
+    return columnName == "synced" && value == "0";
 }
 
 String Logger::getHeader() {
@@ -135,6 +139,8 @@ JsonDocument Logger::readRecords(size_t limit) {
         JsonObject row;
         int lastIndex = 0;
         int sepIndex = 0;
+        bool skipRow = false;
+
         for (int i = 0; i < columns; ++i) {
             sepIndex = line.indexOf(dataSeparator, lastIndex);
             String value;
@@ -144,9 +150,14 @@ JsonDocument Logger::readRecords(size_t limit) {
             value = line.substring(lastIndex, sepIndex);
             lastIndex = sepIndex + dataSeparator.length();
             }
-            row[getColumnName(i)] = value;
-            array.add(row);
+            String columnName = getColumnName(i);
+            if (synced(columnName, value)) {
+                skipRow = true;
+            };
+            row[columnName] = value;
         }
+        if (skipRow) continue; 
+        array.add(row);
         count++;
     }
 

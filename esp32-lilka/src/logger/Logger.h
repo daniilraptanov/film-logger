@@ -27,6 +27,7 @@ class Logger {
 
         LoggerMode mode = LoggerMode::SUSPENDED;
 
+        bool synced(String &columnName, String &value);
         String getHeader();
         String getColumnName(size_t index);
         String generateUUIDv4();
