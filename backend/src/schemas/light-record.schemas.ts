@@ -8,6 +8,7 @@ export const lightRecordSchema = Joi.object().keys({
     lux: Joi.string().required(),
     cct: Joi.string().required(),
     ev: Joi.string().required(),
+    synced: Joi.boolean().required(),
 });
 
 export const lightRecordListSchema = Joi.object().keys({
