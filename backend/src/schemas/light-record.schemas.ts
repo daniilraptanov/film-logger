@@ -2,12 +2,12 @@ import Joi from "joi";
 
 export const lightRecordSchema = Joi.object().keys({
     id: Joi.string().uuid({ version: "uuidv4" }).required(),
-    iso: Joi.number().required(),
-    aperture: Joi.number().required(),
-    shutter: Joi.number().required(),
-    lux: Joi.number().required(),
-    cct: Joi.number().required(),
-    ev: Joi.number().required(),
+    iso: Joi.string().required(),
+    aperture: Joi.string().required(),
+    shutter: Joi.string().required(),
+    lux: Joi.string().required(),
+    cct: Joi.string().required(),
+    ev: Joi.string().required(),
 });
 
 export const lightRecordListSchema = Joi.object().keys({

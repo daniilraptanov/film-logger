@@ -1,11 +1,19 @@
 import { ILightRecordModel, ILightRecordService } from "../domain/light-record.type";
 import { IPaginateModel } from "../domain/tools/service.type";
 import { SimpleService } from "./simple.service";
-import { ILightRecordDTO } from "../domain/dto/light-record.dto";
+import { ILightRecordDTO, INewLightRecordDTO } from "../domain/dto/light-record.dto";
 
 class LightRecordServiceImpl extends SimpleService implements ILightRecordService {
-    async saveRecords(records: ILightRecordDTO[]): Promise<ILightRecordModel[]> {
-        return Promise.all(records.map(record => this._dbInstance.lightRecord.create({ data: record })));
+    async saveRecords(records: INewLightRecordDTO[]): Promise<ILightRecordModel[]> {
+        return Promise.all(records.map(record => this._dbInstance.lightRecord.create({ data: {
+            ...record,
+            iso: parseInt(record.iso),
+            aperture: parseFloat(record.aperture),
+            shutter: parseFloat(record.shutter),
+            lux: parseFloat(record.lux),
+            cct: parseFloat(record.cct),
+            ev: parseFloat(record.ev),
+        } })));
     }
 
     async getRecords(page: number, limit: number): Promise<IPaginateModel<ILightRecordModel>> {
