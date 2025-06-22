@@ -7,7 +7,7 @@ export interface INewLightRecordDTO {
     lux: string;
     cct: string;
     ev: string;
-    synced: boolean;
+    synced: string;
 }
 
 export interface ILightRecordDTO extends ISimpleDTO {

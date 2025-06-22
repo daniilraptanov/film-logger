@@ -6,7 +6,7 @@ import { INewLightRecordDTO } from "../domain/dto/light-record.dto";
 class LightRecordServiceImpl extends SimpleService implements ILightRecordService {
     async saveRecords(records: INewLightRecordDTO[]): Promise<ILightRecordModel[]> {
         return Promise.all(
-            records.filter(record => !record.synced).map(record => this._dbInstance.lightRecord.create({ data: {
+            records.filter(record => !Boolean(record.synced)).map(record => this._dbInstance.lightRecord.create({ data: {
                 ...record,
                 iso: parseInt(record.iso),
                 aperture: parseFloat(record.aperture),
