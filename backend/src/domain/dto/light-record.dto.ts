@@ -1,6 +1,7 @@
 import { ISimpleDTO } from "./simple.dto";
 
 export interface INewLightRecordDTO {
+    id: string;
     iso: string;
     aperture: string;
     shutter: string;

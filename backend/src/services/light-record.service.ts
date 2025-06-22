@@ -8,7 +8,7 @@ class LightRecordServiceImpl extends SimpleService implements ILightRecordServic
     async saveRecords(records: INewLightRecordDTO[]): Promise<ILightRecordModel[]> {
         return Promise.all(
             records.filter(record => !stringToBoolean(record.synced)).map(record => this._dbInstance.lightRecord.create({ data: {
-                ...record,
+                id: record.id,
                 iso: parseInt(record.iso),
                 aperture: parseFloat(record.aperture),
                 shutter: parseFloat(record.shutter),
