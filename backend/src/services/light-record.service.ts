@@ -2,11 +2,12 @@ import { ILightRecordModel, ILightRecordService } from "../domain/light-record.t
 import { IPaginateModel } from "../domain/tools/service.type";
 import { SimpleService } from "./simple.service";
 import { INewLightRecordDTO } from "../domain/dto/light-record.dto";
+import { stringToBoolean } from "../handlers/tools";
 
 class LightRecordServiceImpl extends SimpleService implements ILightRecordService {
     async saveRecords(records: INewLightRecordDTO[]): Promise<ILightRecordModel[]> {
         return Promise.all(
-            records.filter(record => !Boolean(record.synced)).map(record => this._dbInstance.lightRecord.create({ data: {
+            records.filter(record => !stringToBoolean(record.synced)).map(record => this._dbInstance.lightRecord.create({ data: {
                 ...record,
                 iso: parseInt(record.iso),
                 aperture: parseFloat(record.aperture),
