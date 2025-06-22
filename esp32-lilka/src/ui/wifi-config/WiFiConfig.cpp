@@ -12,10 +12,15 @@ String WiFiConfig::syncData() {
     Logger logger;
 
     JsonDocument records = logger.readRecords(10);
-
-    serializeJsonPretty(records, Serial);
-
-    return "Дані успішно синхронізовані!";
+    if (records.is<JsonArray>() && !records.as<JsonArray>().isNull() && records.as<JsonArray>().size() > 0) {
+        String result = apiService.exportRecords(records);
+        if (result.length() != 0) {
+            return "Дані успішно синхронізовані";
+        }
+        return "Помилка при збереженні даних";
+    } else {
+        return "Даних не знайдено";
+    }
 }
 
 String WiFiConfig::checkConnection() {

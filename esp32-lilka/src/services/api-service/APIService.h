@@ -7,9 +7,11 @@ class APIService {
     public:
         APIService();
         String checkConnection();
+        String exportRecords(JsonDocument &records);
 
     private:
         NetworkService networkService;
+        String handleStringApiResponse(JsonDocument &response);
 };
 
 #endif

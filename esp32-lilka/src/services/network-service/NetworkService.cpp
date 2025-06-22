@@ -67,40 +67,44 @@ JsonDocument NetworkService::get(String suburl) {
     return jsonify(response);
 }
 
-JsonDocument NetworkService::post(String suburl, const std::string& data) {
-    // HTTPClient http;
-    // String response = "";
+JsonDocument NetworkService::post(String suburl, JsonDocument &data) {
+    HTTPClient http;
+    String response = "";
 
-    // if (WiFi.status() != WL_CONNECTED) {
-    //     return "";
-    // }
+    if (WiFi.status() != WL_CONNECTED) {
+        return jsonify(response);
+    }
 
-    // if (http.begin(getURL(suburl))) {
-    //     http.addHeader("Content-Type", "application/json");
-    //     int httpCode = http.POST((uint8_t*)data.c_str(), data.length());
-    //     if (httpCode == HTTP_CODE_OK) {
-    //         response = http.getString().c_str();
-    //     }
-    //     http.end();
-    // }
-    // return response;
+    if (http.begin(getURL(suburl))) {
+        String payload;
+        serializeJson(data, payload);
+        http.addHeader("Content-Type", "application/json");
+        int httpCode = http.POST(payload);
+        if (httpCode == HTTP_CODE_CREATED) {
+            response = http.getString().c_str();
+        }
+        http.end();
+    }
+    return jsonify(response);
 }
 
-JsonDocument NetworkService::patch(String suburl, const std::string& data) {
-    // HTTPClient http;
-    // String response = "";
+JsonDocument NetworkService::patch(String suburl, JsonDocument &data) {
+    HTTPClient http;
+    String response = "";
 
-    // if (WiFi.status() != WL_CONNECTED) {
-    //     return response;
-    // }
+    if (WiFi.status() != WL_CONNECTED) {
+        return jsonify(response);
+    }
 
-    // if (http.begin(getURL(suburl))) {
-    //     http.addHeader("Content-Type", "application/json");
-    //     int httpCode = http.sendRequest("PATCH", (uint8_t*)data.c_str(), data.length());
-    //     if (httpCode == HTTP_CODE_OK) {
-    //         response = http.getString().c_str();
-    //     }
-    //     http.end();
-    // }
-    // return response;
+    if (http.begin(getURL(suburl))) {
+        String payload;
+        serializeJson(data, payload);
+        http.addHeader("Content-Type", "application/json");
+        int httpCode = http.POST(payload);
+        if (httpCode == HTTP_CODE_CREATED) {
+            response = http.getString().c_str();
+        }
+        http.end();
+    }
+    return jsonify(response);
 }

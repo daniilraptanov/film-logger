@@ -20,7 +20,7 @@ void Logger::begin() {
 }
 
 bool Logger::synced(String &columnName, String &value) {
-    return columnName == "synced" && value == "0";
+    return columnName == "synced" && value == "1";
 }
 
 String Logger::getHeader() {
@@ -136,7 +136,7 @@ JsonDocument Logger::readRecords(size_t limit) {
 
         if ((line.length() == 0) || (line == getHeader())) continue;
 
-        JsonObject row;
+        JsonObject row = array.createNestedObject();
         int lastIndex = 0;
         int sepIndex = 0;
         bool skipRow = false;
@@ -145,19 +145,18 @@ JsonDocument Logger::readRecords(size_t limit) {
             sepIndex = line.indexOf(dataSeparator, lastIndex);
             String value;
             if (sepIndex == -1) {
-            value = line.substring(lastIndex);
+                value = line.substring(lastIndex);
             } else {
-            value = line.substring(lastIndex, sepIndex);
-            lastIndex = sepIndex + dataSeparator.length();
+                value = line.substring(lastIndex, sepIndex);
+                lastIndex = sepIndex + dataSeparator.length();
             }
             String columnName = getColumnName(i);
             if (synced(columnName, value)) {
                 skipRow = true;
-            };
+            }
             row[columnName] = value;
         }
-        if (skipRow) continue; 
-        array.add(row);
+        if (skipRow) continue;
         count++;
     }
 

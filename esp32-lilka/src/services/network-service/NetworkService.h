@@ -12,8 +12,8 @@ class NetworkService {
         NetworkService();
 
         JsonDocument get(String suburl);
-        JsonDocument post(String suburl, const std::string& data);
-        JsonDocument patch(String suburl, const std::string& data);
+        JsonDocument post(String suburl, JsonDocument &data);
+        JsonDocument patch(String suburl, JsonDocument &data);
         
         String encodeURL(String str);
         String getMessage(JsonDocument& doc);
