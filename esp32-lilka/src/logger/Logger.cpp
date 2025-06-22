@@ -37,6 +37,38 @@ String Logger::getColumnName(size_t index) {
     return "";
 }
 
+String Logger::generateUUIDv4() {
+    uint8_t uuid[16];
+
+    // Fill with random bytes
+    for (int i = 0; i < 16; i++) {
+        uuid[i] = (uint8_t)esp_random();
+    }
+
+    // Set version: UUID (4) — bits 12-15 from 7th byte
+    uuid[6] = (uuid[6] & 0x0F) | 0x40;
+
+    // Set variant UUID — bits 6-7 from 9th byte
+    uuid[8] = (uuid[8] & 0x3F) | 0x80;
+
+    // Format to UUID string
+    char uuid_str[37];
+    sprintf(uuid_str,
+        "%02x%02x%02x%02x-"
+        "%02x%02x-"
+        "%02x%02x-"
+        "%02x%02x-"
+        "%02x%02x%02x%02x%02x%02x",
+        uuid[0], uuid[1], uuid[2], uuid[3],
+        uuid[4], uuid[5],
+        uuid[6], uuid[7],
+        uuid[8], uuid[9],
+        uuid[10], uuid[11], uuid[12], uuid[13], uuid[14], uuid[15]
+    );
+
+    return String(uuid_str);
+}
+
 void Logger::handleLogging(lilka::State *state, int &iso, float &aperture, float &shutter, float &lux, float &cct, float &ev) {
     if (state->c.justPressed && mode == LoggerMode::STREAM) {
         mode = LoggerMode::SUSPENDED;
@@ -69,6 +101,7 @@ void Logger::saveData(int &iso, float &aperture, float &shutter, float &lux, flo
         Serial.println(F("Failed to log data..."));
     };
     file.println(
+        generateUUIDv4() + dataSeparator +
         iso + dataSeparator + 
         aperture + dataSeparator + 
         shutter + dataSeparator + 

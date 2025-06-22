@@ -14,9 +14,11 @@ class WiFiConfig : protected MenuComponent {
         void drawUI(lilka::Canvas *canvas);
     
     private:
-        void begin();
-        void syncData();
         int maxAttempts = 100;
+        bool connectionChecked = false;
+        void begin();
+        String syncData();
+        String checkConnection();
 };
 
 #endif

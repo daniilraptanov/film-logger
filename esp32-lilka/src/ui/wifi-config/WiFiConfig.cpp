@@ -7,13 +7,25 @@ void WiFiConfig::begin() {
     WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
 }
 
-void WiFiConfig::syncData() {
-    // TODO
-
+String WiFiConfig::syncData() {
     APIService apiService;
     Logger logger;
 
-    logger.readRecords(10);
+    JsonDocument records = logger.readRecords(10);
+
+    serializeJsonPretty(records, Serial);
+
+    return "Дані успішно синхронізовані!";
+}
+
+String WiFiConfig::checkConnection() {
+    APIService apiService;
+    String result = apiService.checkConnection();
+    if (result.length() != 0) {
+        connectionChecked = true;
+        return result;
+    }
+    return "Сервер не відповідає";
 }
 
 void WiFiConfig::drawUI(lilka::Canvas *canvas) {
@@ -22,6 +34,7 @@ void WiFiConfig::drawUI(lilka::Canvas *canvas) {
     lilka::ProgressDialog progress("WiFi-мережа", "Зачекайте, йде підключення до мережі WiFi...");
     int attempts = 0;
     while ((WiFi.status() != WL_CONNECTED) && (attempts < maxAttempts)) {
+        connectionChecked = false;
         begin();
 
         progress.setProgress(attempts);
@@ -32,19 +45,17 @@ void WiFiConfig::drawUI(lilka::Canvas *canvas) {
         attempts++;
     }
     if (WiFi.status() == WL_CONNECTED) {
-        APIService apiService;
-        String result = apiService.checkConnection();
-        progress.setProgress(maxAttempts);
-        if (result.length() == 0) {
-            progress.setMessage("Пристрій підключено до мережі, але сервер недоступний");
+        String result = "";
+        if (!connectionChecked) {
+            result = checkConnection();
         } else {
-            progress.setMessage(result);
+            result = syncData();
         }
+        progress.setProgress(maxAttempts);
+        progress.setMessage(result);
     } else {
         progress.setMessage("Помилка підключення :(");
     }
-
-    syncData(); // TODO
 
     progress.draw(canvas);
     lilka::display.drawCanvas(canvas);

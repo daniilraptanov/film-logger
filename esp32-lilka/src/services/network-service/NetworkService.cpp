@@ -34,7 +34,7 @@ JsonDocument NetworkService::jsonify(String& response) {
     DeserializationError error = deserializeJson(doc, response);
     if (error || (response.length() == 0)) {
         JsonDocument fallback;
-        fallback["message"] = "error";
+        fallback["message"] = "network error";
         fallback.createNestedObject("data");
         return fallback;
     }

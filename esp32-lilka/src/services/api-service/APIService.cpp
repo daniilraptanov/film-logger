@@ -9,5 +9,10 @@ String APIService::checkConnection() {
         "/api/v1/system?data=" + networkService.encodeURL("Пристрій підключено до серверу")
     );
     Serial.println(networkService.getMessage(result));
-    return networkService.getData(result).as<String>();
+    JsonDocument data = networkService.getData(result);
+    
+    if (data.is<JsonObject>() && data.size() == 0) {
+        return "";
+    }
+    return data.as<String>();
 }
