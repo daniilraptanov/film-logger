@@ -1,7 +1,7 @@
 import { ILightRecordModel, ILightRecordService } from "../domain/light-record.type";
 import { IPaginateModel } from "../domain/tools/service.type";
 import { SimpleService } from "./simple.service";
-import { ILightRecordDTO, INewLightRecordDTO } from "../domain/dto/light-record.dto";
+import { INewLightRecordDTO } from "../domain/dto/light-record.dto";
 
 class LightRecordServiceImpl extends SimpleService implements ILightRecordService {
     async saveRecords(records: INewLightRecordDTO[]): Promise<ILightRecordModel[]> {
