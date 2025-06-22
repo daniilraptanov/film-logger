@@ -22,7 +22,9 @@ String APIService::checkConnection() {
 }
 
 String APIService::exportRecords(JsonDocument &records) {
-    JsonDocument result = networkService.post("/api/v1/light-records/import", records);
+    JsonDocument payload;
+    payload["data"] = records;
+    JsonDocument result = networkService.post("/api/v1/light-records/import", payload);
     return handleStringApiResponse(result);
 }
 
