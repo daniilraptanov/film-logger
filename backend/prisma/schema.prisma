@@ -15,7 +15,7 @@ model LightRecord {
 
   iso       Int
   aperture  Float
-  shutter   Float
+  shutter   Float?
   lux       Float
   cct       Float
   ev        Float 
