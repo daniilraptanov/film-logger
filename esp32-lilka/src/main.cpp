@@ -31,13 +31,12 @@ void setup() {
     menu.begin(&controller);
     lightSensor.begin();
     logger.begin();
-
-    pinMode(BUZZER_PIN, INPUT);
 }
 
 void loop() {
     lilka::Canvas canvas;
     lilka::State state = lilka::controller.getState();
+    pinMode(BUZZER_PIN, INPUT);
 
     float lux = lightSensor.getLux();
     float cct = lightSensor.getCCT();

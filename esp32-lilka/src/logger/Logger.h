@@ -17,6 +17,8 @@ class Logger {
         void begin();
         void handleLogging(lilka::State *state, int &iso, float &aperture, float &shutter, float &lux, float &cct, float &ev);
         JsonDocument readRecords(size_t limit);
+        bool markAsSynced(size_t limit);
+        size_t countUnsyncedRecords();
 
     private:
         String fileName = "/fl_logs.csv";

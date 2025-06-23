@@ -10,16 +10,23 @@ void WiFiConfig::begin() {
 String WiFiConfig::syncData() {
     APIService apiService;
     Logger logger;
+    size_t limit = 10;
 
-    JsonDocument records = logger.readRecords(10);
+    JsonDocument records = logger.readRecords(limit);
     if (records.is<JsonArray>() && !records.as<JsonArray>().isNull() && records.as<JsonArray>().size() > 0) {
         String result = apiService.exportRecords(records);
         if (result.length() != 0) {
-            return "Дані успішно синхронізовані";
+            size_t rows = records.as<JsonArray>().size();
+            bool updated = logger.markAsSynced(rows);
+            size_t unsyncedRows = logger.countUnsyncedRecords();
+            if (updated) {
+                return String(F("Успішно збережених \nрядків: ")) + rows + String(F(", залишилось: ")) + unsyncedRows;
+            }
+            return F("Синхронізація не заве-\nршена.");
         }
-        return "Помилка при збереженні даних";
+        return F("Помилка при збереженні даних.");
     } else {
-        return "Даних не знайдено";
+        return F("Даних для синхроні-\nзації не знайдено.");
     }
 }
 
@@ -30,13 +37,13 @@ String WiFiConfig::checkConnection() {
         connectionChecked = true;
         return result;
     }
-    return "Сервер не відповідає";
+    return F("Сервер не відповідає");
 }
 
 void WiFiConfig::drawUI(lilka::Canvas *canvas) {
     drawCommonUI(canvas);
 
-    lilka::ProgressDialog progress("WiFi-мережа", "Зачекайте, йде підключення до мережі WiFi...");
+    lilka::ProgressDialog progress(F("   WiFi-мережа"), F("Зачекайте, йде підклю-\nчення до мережі WiFi..."));
     int attempts = 0;
     while ((WiFi.status() != WL_CONNECTED) && (attempts < maxAttempts)) {
         connectionChecked = false;
@@ -54,14 +61,23 @@ void WiFiConfig::drawUI(lilka::Canvas *canvas) {
         if (!connectionChecked) {
             result = checkConnection();
         } else {
+            // TODO :: переробити з прогрес баром,
+            // щоб показувати скільки залишилось (замість тексту).
+            // Завантаження повинно відбуватися без затримок.
+            // При відкриванні цього меню спочатку показувати UI, а потім робити
+            // мережні запити, бо підлагує.
             result = syncData();
         }
         progress.setProgress(maxAttempts);
         progress.setMessage(result);
     } else {
-        progress.setMessage("Помилка підключення :(");
+        progress.setMessage(F("Помилка підключення :("));
     }
 
     progress.draw(canvas);
     lilka::display.drawCanvas(canvas);
+
+    // TODO :: використати millis,
+    // тоді затримувати сповіщення, щоб користувач встигав прочитати
+    delay(3000);
 }

@@ -136,27 +136,34 @@ JsonDocument Logger::readRecords(size_t limit) {
 
         if ((line.length() == 0) || (line == getHeader())) continue;
 
-        JsonObject row = array.createNestedObject();
         int lastIndex = 0;
         int sepIndex = 0;
         bool skipRow = false;
+        String values[columns];
 
         for (int i = 0; i < columns; ++i) {
             sepIndex = line.indexOf(dataSeparator, lastIndex);
-            String value;
             if (sepIndex == -1) {
-                value = line.substring(lastIndex);
+                values[i] = line.substring(lastIndex);
             } else {
-                value = line.substring(lastIndex, sepIndex);
+                values[i] = line.substring(lastIndex, sepIndex);
                 lastIndex = sepIndex + dataSeparator.length();
             }
+        }
+
+        for (int i = 0; i < columns; ++i) {
             String columnName = getColumnName(i);
-            if (synced(columnName, value)) {
+            if (synced(columnName, values[i])) {
                 skipRow = true;
+                break;
             }
-            row[columnName] = value;
         }
         if (skipRow) continue;
+
+        JsonObject row = array.createNestedObject();
+        for (int i = 0; i < columns; ++i) {
+            row[getColumnName(i)] = values[i];
+        }
         count++;
     }
 
@@ -164,3 +171,79 @@ JsonDocument Logger::readRecords(size_t limit) {
     return doc;
 }
 
+bool Logger::markAsSynced(size_t limit) {
+    File file = SD.open(fileName, FILE_READ);
+    if (!file) {
+        Serial.println(F("Failed to open file for reading..."));
+        return false;
+    }
+
+    String tempFileName = String(fileName) + ".tmp";
+    File tempFile = SD.open(tempFileName.c_str(), FILE_WRITE);
+    if (!tempFile) {
+        Serial.println(F("Failed to open temp file for writing..."));
+        file.close();
+        return false;
+    }
+
+    tempFile.println(getHeader());
+
+    size_t count = 0;
+    String line;
+    while (file.available()) {
+        line = file.readStringUntil('\n');
+        line.trim();
+
+        if ((line.length() == 0) || (line == getHeader())) {
+            continue;
+        }
+
+        int lastSep = line.lastIndexOf(dataSeparator);
+        if (lastSep == -1) {
+            tempFile.println(line);
+        } else {
+            String syncedValue = line.substring(lastSep + 1);
+            if (syncedValue != "1" && (limit == 0 || count < limit)) {
+                line = line.substring(0, lastSep + 1) + "1";
+                count++;
+            }
+            tempFile.println(line);
+        }
+    }
+
+    file.close();
+    tempFile.close();
+
+    SD.remove(fileName);
+    SD.rename(tempFileName.c_str(), fileName);
+
+    return (limit == 0) || (count == limit);
+}
+
+size_t Logger::countUnsyncedRecords() {
+    File file = SD.open(fileName, FILE_READ);
+    if (!file) {
+        Serial.println(F("Failed to open file for reading..."));
+        return 0;
+    }
+
+    size_t count = 0;
+    String line;
+    while (file.available()) {
+        line = file.readStringUntil('\n');
+        line.trim();
+
+        if ((line.length() == 0) || (line == getHeader())) continue;
+
+        int lastSep = line.lastIndexOf(dataSeparator);
+        if (lastSep == -1) continue;
+
+        String syncedValue = line.substring(lastSep + 1);
+        if (syncedValue != "1") {
+            count++;
+        }
+    }
+
+    file.close();
+    return count;
+}
