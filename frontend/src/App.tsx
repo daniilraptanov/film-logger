@@ -4,10 +4,14 @@ import ChartsPage from "./pages/charts-page/ChartsPage";
 import SettingsPage from "./pages/settings-page/SettingsPage";
 import { useLightRecordsStore } from "./store/useLightRecordsStore";
 import { useEffect } from "react";
+import { useSettingsStore } from "./store/useSettingsStore";
 
 const App = () => {
     const { page, limit, fetchRecords } = useLightRecordsStore();
+    const { fetchSettings } = useSettingsStore();
+
     useEffect(() => {
+        fetchSettings();
         fetchRecords();
     }, [page, limit]);
 

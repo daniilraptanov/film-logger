@@ -14,10 +14,9 @@ class LightRecordService extends ApiService {
 
     async getRecords(page: number, limit: number): Promise<PaginateModel<LightRecord>> {
         try {
-            const response: ApiResponse<PaginateModel<LightRecord>> = await (await this.API.get(
-                `api/v1/light-records?page=${page}&limit=${limit}`,
-                { headers: { "ngrok-skip-browser-warning": "false" } }
-            )).json();
+            const response: ApiResponse<PaginateModel<LightRecord>> = await this.API
+                .get(`api/v1/light-records?page=${page}&limit=${limit}`)
+                .json();
             return response?.data;
         } catch {
             return this.DEFAULT_RECORDS_OBJ;
