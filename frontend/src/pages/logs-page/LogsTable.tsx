@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo, useState } from "react";
+import { FC, useMemo, useState } from "react";
 import { SortKey } from "../../domain/models/LightRecord";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
 import { useLightRecordsStore } from "../../store/useLightRecordsStore";
@@ -6,11 +6,7 @@ import { useLightRecordsStore } from "../../store/useLightRecordsStore";
 interface LogsTableProps {}
 
 const LogsTable: FC<LogsTableProps> = () => {
-    const { page, limit, resetPage, setPrevPage, setNextPage, setLimit, records, fetchRecords } = useLightRecordsStore();
-
-    useEffect(() => {
-        fetchRecords();
-    }, [page, limit]);
+    const { page, limit, resetPage, setPrevPage, setNextPage, setLimit, records } = useLightRecordsStore();
 
     const [sortKey, setSortKey] = useState<SortKey>("iso");
     const [sortAsc, setSortAsc] = useState(true);

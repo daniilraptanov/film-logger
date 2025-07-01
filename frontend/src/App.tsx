@@ -2,8 +2,15 @@ import { Route, Routes } from "react-router-dom";
 import LogsPage from "./pages/logs-page/LogsPage";
 import ChartsPage from "./pages/charts-page/ChartsPage";
 import SettingsPage from "./pages/settings-page/SettingsPage";
+import { useLightRecordsStore } from "./store/useLightRecordsStore";
+import { useEffect } from "react";
 
 const App = () => {
+    const { page, limit, fetchRecords } = useLightRecordsStore();
+    useEffect(() => {
+        fetchRecords();
+    }, [page, limit]);
+
     return (
         <Routes>
             <Route path="/" element={<LogsPage />} />
