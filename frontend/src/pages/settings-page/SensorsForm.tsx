@@ -1,4 +1,5 @@
 import { useState } from "react";
+import TCS34725Hint from "./TCS34725Hint";
 
 const SensorsForm = () => {
     const [gain, setGain] = useState<number>(4);
@@ -14,7 +15,10 @@ const SensorsForm = () => {
             onSubmit={handleSubmit}
             className="flex flex-col w-full max-w-md bg-gray-900 p-6 rounded-lg shadow-md text-white"
         >
-            <h2 className="text-xl font-semibold mb-4">Налаштування TCS34725</h2>
+            <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-semibold">Налаштування TCS34725</h2>
+                <TCS34725Hint />
+            </div>
             <div className="mb-4">
                 <label className="block mb-1">Gain</label>
                 <input
