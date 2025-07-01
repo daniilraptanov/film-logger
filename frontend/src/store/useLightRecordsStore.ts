@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { LightRecord } from '../domain/models/LightRecord';
 import { lightRecordServiceFactory } from '../services/light-record-service';
 import { PaginateModel } from '../domain/tools/PaginateModel';
+import { withLoading } from './useAppStore';
 
 type LightRecordsState = {
     page: number;
@@ -27,9 +28,9 @@ export const useLightRecordsStore = create<LightRecordsState>((set, get, state) 
     setNextPage: () => set({ page: Math.min(state.getState().records.totalPage, state.getState().page + 1) }),
     setLimit: (limit) => set({ limit }),
 
-    fetchRecords: async () => {
+    fetchRecords: withLoading(async () => {
         const { page, limit } = get();
         const records = await lightRecordService.getRecords(page, limit);
         set({ records });
-    },
+    }),
 }));
