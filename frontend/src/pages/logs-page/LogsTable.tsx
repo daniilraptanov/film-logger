@@ -1,32 +1,28 @@
-import { FC, useMemo, useState } from "react";
-import { LightRecord, SortKey } from "../../domain/models/LightRecord";
+import { FC, useEffect, useMemo, useState } from "react";
+import { SortKey } from "../../domain/models/LightRecord";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
+import { useLightRecordsStore } from "../../store/useLightRecordsStore";
 
-interface LogsTableProps {
-    records: LightRecord[];
-}
+interface LogsTableProps {}
 
-const LogsTable: FC<LogsTableProps> = ({ records }) => {
-    const [page, setPage] = useState(1);
-    const [perPage, setPerPage] = useState(10);
+const LogsTable: FC<LogsTableProps> = () => {
+    const { page, limit, resetPage, setPrevPage, setNextPage, setLimit, records, fetchRecords } = useLightRecordsStore();
+
+    useEffect(() => {
+        fetchRecords();
+    }, [page, limit]);
+
     const [sortKey, setSortKey] = useState<SortKey>("iso");
     const [sortAsc, setSortAsc] = useState(true);
 
     const sortedRecords = useMemo(() => {
-        const sorted = [...records].sort((a, b) =>
+        const sorted = [...records.rows].sort((a, b) =>
             sortAsc
                 ? a[sortKey] - b[sortKey]
                 : b[sortKey] - a[sortKey]
         );
         return sorted;
     }, [records, sortKey, sortAsc]);
-
-    const paginated = useMemo(() => {
-        const start = (page - 1) * perPage;
-        return sortedRecords.slice(start, start + perPage);
-    }, [sortedRecords, page, perPage]);
-
-    const totalPages = Math.ceil(records.length / perPage);
 
     const handleSort = (key: SortKey) => {
         if (sortKey === key) setSortAsc(!sortAsc);
@@ -66,7 +62,7 @@ const LogsTable: FC<LogsTableProps> = ({ records }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {paginated.map((record, idx) => (
+                        {sortedRecords.map((record, idx) => (
                             <tr
                                 key={idx}
                                 className="border-t border-gray-700 hover:bg-gray-700"
@@ -80,7 +76,7 @@ const LogsTable: FC<LogsTableProps> = ({ records }) => {
                                 <td className="px-4 py-2">{record.ev}</td>
                             </tr>
                         ))}
-                        {paginated.length === 0 && (
+                        {records.rows.length === 0 && (
                             <tr>
                                 <td colSpan={6} className="text-center py-4 text-gray-400">
                                     Даних нема
@@ -96,10 +92,10 @@ const LogsTable: FC<LogsTableProps> = ({ records }) => {
                 <div className="flex items-center gap-2">
                     <span className="text-sm text-gray-300">Показувати по:</span>
                     <select
-                        value={perPage}
+                        value={limit}
                         onChange={(e) => {
-                            setPage(1);
-                            setPerPage(Number(e.target.value));
+                            resetPage();
+                            setLimit(Number(e.target.value));
                         }}
                         className="bg-gray-700 text-white px-2 py-1 rounded"
                     >
@@ -111,18 +107,18 @@ const LogsTable: FC<LogsTableProps> = ({ records }) => {
 
                 <div className="flex items-center gap-3">
                     <button
-                        onClick={() => setPage((p) => Math.max(1, p - 1))}
+                        onClick={setPrevPage}
                         disabled={page === 1}
                         className="text-white bg-gray-700 hover:bg-gray-600 disabled:opacity-40 px-3 py-1 rounded"
                     >
                         Назад
                     </button>
                     <span className="text-sm text-gray-300">
-                        Сторінка {page} з {totalPages} | Записів: {records.length}
+                        Сторінка {page} з {records.totalPage} | Записів: {records.rows.length}
                     </span>
                     <button
-                        onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                        disabled={page === totalPages}
+                        onClick={setNextPage}
+                        disabled={page === records.totalPage}
                         className="text-white bg-gray-700 hover:bg-gray-600 disabled:opacity-40 px-3 py-1 rounded"
                     >
                         Вперед
