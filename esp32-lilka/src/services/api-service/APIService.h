@@ -8,6 +8,8 @@ class APIService {
         APIService();
         String checkConnection();
         String exportRecords(JsonDocument &records);
+        JsonDocument getTSC34725Settings();
+        JsonDocument getLoggingSettings();
 
     private:
         NetworkService networkService;

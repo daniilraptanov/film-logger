@@ -19,6 +19,7 @@ class Logger {
         JsonDocument readRecords(size_t limit);
         bool markAsSynced(size_t limit);
         size_t countUnsyncedRecords();
+        bool applySettings(JsonDocument settings);
 
     private:
         String fileName = "/fl_logs.csv";
@@ -28,6 +29,9 @@ class Logger {
         size_t columns = sizeof(columnNames) / sizeof(columnNames[0]);
 
         LoggerMode mode = LoggerMode::SUSPENDED;
+        
+        int streamIntervalSec = 0;
+        void pauseStream();
 
         bool synced(String &columnName, String &value);
         String getHeader();

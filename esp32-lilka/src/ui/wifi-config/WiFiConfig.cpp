@@ -30,12 +30,41 @@ String WiFiConfig::syncData() {
     }
 }
 
-String WiFiConfig::checkConnection() {
+String WiFiConfig::updateHardware() {
+    APIService apiService;
+    Logger logger;
+    LightSensor lightSensor;
+
+    JsonDocument sensorSettings = apiService.getTSC34725Settings();
+    JsonDocument loggingSettings = apiService.getLoggingSettings();
+
+    if (!sensorSettings.isNull() && !loggingSettings.isNull()) {
+        bool sensorUpdated = lightSensor.applySettings(sensorSettings);
+        bool loggingUpdated = logger.applySettings(loggingSettings);
+
+        if (sensorUpdated && loggingUpdated) {
+            return F("Налаштування оновлено.");
+        } else if (!sensorUpdated && !loggingUpdated) {
+            return F("Помилка оновлення всіх налаштувань.");
+        } else if (!sensorUpdated) {
+            return F("Помилка оновлення сенсора.");
+        } else {
+            return F("Помилка оновлення логування.");
+        }
+    } else {
+        return F("Не вдалося отримати налаштування.");
+    }
+}
+
+String WiFiConfig::initConnection() {
     APIService apiService;
     String result = apiService.checkConnection();
     if (result.length() != 0) {
-        connectionChecked = true;
-        return result;
+        result = updateHardware();
+        if (result.length() != 0) {
+            connectionChecked = true;
+            return result;
+        }
     }
     return F("Сервер не відповідає");
 }
@@ -59,7 +88,7 @@ void WiFiConfig::drawUI(lilka::Canvas *canvas) {
     if (WiFi.status() == WL_CONNECTED) {
         String result = "";
         if (!connectionChecked) {
-            result = checkConnection();
+            result = initConnection();
         } else {
             // TODO :: переробити з прогрес баром,
             // щоб показувати скільки залишилось (замість тексту).

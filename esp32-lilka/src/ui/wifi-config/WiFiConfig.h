@@ -7,6 +7,7 @@
 #include <ui/menu-component/MenuComponent.h>
 #include <services/api-service/APIService.h>
 #include <logger/Logger.h>
+#include <sensors/light-sensor/LightSensor.h>
 
 class WiFiConfig : protected MenuComponent {
     public:
@@ -18,7 +19,8 @@ class WiFiConfig : protected MenuComponent {
         bool connectionChecked = false;
         void begin();
         String syncData();
-        String checkConnection();
+        String initConnection();
+        String updateHardware();
 };
 
 #endif

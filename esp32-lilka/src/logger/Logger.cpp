@@ -73,6 +73,13 @@ String Logger::generateUUIDv4() {
     return String(uuid_str);
 }
 
+void Logger::pauseStream() {
+    if (mode == LoggerMode::STREAM) {
+        // TODO :: use millis instead delay
+        delay(streamIntervalSec * 1000);
+    }
+}
+
 void Logger::handleLogging(lilka::State *state, int &iso, float &aperture, float &shutter, float &lux, float &cct, float &ev) {
     if (state->c.justPressed && mode == LoggerMode::STREAM) {
         mode = LoggerMode::SUSPENDED;
@@ -97,6 +104,8 @@ void Logger::handleLogging(lilka::State *state, int &iso, float &aperture, float
         Serial.println("saved in a single mode");
         mode = LoggerMode::SUSPENDED;
     }
+
+    pauseStream();
 }
 
 void Logger::saveData(int &iso, float &aperture, float &shutter, float &lux, float &cct, float &ev) {
@@ -246,4 +255,9 @@ size_t Logger::countUnsyncedRecords() {
 
     file.close();
     return count;
+}
+
+bool Logger::applySettings(JsonDocument settings) {
+    streamIntervalSec = settings["streamIntervalSec"] | 0;
+    return true;
 }

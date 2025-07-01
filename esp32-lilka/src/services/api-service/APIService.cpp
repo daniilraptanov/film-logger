@@ -28,3 +28,22 @@ String APIService::exportRecords(JsonDocument &records) {
     return handleStringApiResponse(result);
 }
 
+JsonDocument APIService::getTSC34725Settings() {
+    JsonDocument result = networkService.get("/api/v1/sensors");
+    JsonDocument data = networkService.getData(result);
+    JsonDocument settings;
+    JsonArray rows = data["rows"].as<JsonArray>();
+    if (!rows.isNull() && rows.size() > 0) {
+        JsonObject first = rows[0];
+        settings["type"] = first["type"] | 0;
+        settings["gain"] = first["gain"] | 0;
+        settings["integrationTime"] = first["integrationTime"] | 0;
+    }
+    return settings;
+}
+
+JsonDocument APIService::getLoggingSettings() {
+    JsonDocument result = networkService.get("/api/v1/logging");
+    JsonDocument data = networkService.getData(result);
+    return data;
+}
