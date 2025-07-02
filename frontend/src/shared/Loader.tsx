@@ -55,42 +55,56 @@ const planets = [
     { size: 12, color: "#f96", radius: 70, duration: 3, delay: 0.7 },
 ];
 
+const overlayStyle: CSSProperties = {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100vw",
+    height: "100vh",
+    background: "rgba(0,0,0,0.3)",
+    zIndex: 9999,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+};
+
+const loaderBoxStyle: CSSProperties = {
+    position: "relative",
+    width: 160,
+    height: 160,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+};
+
 const Loader: React.FC = () => (
-    <div
-        style={{
-            position: "relative",
-            width: 160,
-            height: 160,
-            margin: "40px auto",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-        }}
-    >
-        <div style={sunStyle} />
-        {planets.map((p, i) => (
-            <Fragment key={i}>
-                <div style={orbitStyle(p.radius)} />
-                <div
-                    style={{
-                        ...planetStyle(p.size, p.color, p.radius, p.duration, p.delay),
-                        animationName: `orbit-${p.radius}`,
-                    }}
-                />
-            </Fragment>
-        ))}
-        <style>
-            {planets
-                .map(
-                    (p) => `
-                        @keyframes orbit-${p.radius} {
-                            0% { transform: rotate(0deg) translate(${p.radius}px) rotate(0deg); }
-                            100% { transform: rotate(360deg) translate(${p.radius}px) rotate(-360deg); }
-                        }
-                    `
-                )
-                .join("\n")}
-        </style>
+    <div style={overlayStyle}>
+        <div style={loaderBoxStyle}>
+            <div style={sunStyle} />
+            {planets.map((p, i) => (
+                <Fragment key={i}>
+                    <div style={orbitStyle(p.radius)} />
+                    <div
+                        style={{
+                            ...planetStyle(p.size, p.color, p.radius, p.duration, p.delay),
+                            animationName: `orbit-${p.radius}`,
+                        }}
+                    />
+                </Fragment>
+            ))}
+            <style>
+                {planets
+                    .map(
+                        (p) => `
+                            @keyframes orbit-${p.radius} {
+                                0% { transform: rotate(0deg) translate(${p.radius}px) rotate(0deg); }
+                                100% { transform: rotate(360deg) translate(${p.radius}px) rotate(-360deg); }
+                            }
+                        `
+                    )
+                    .join("\n")}
+            </style>
+        </div>
     </div>
 );
 

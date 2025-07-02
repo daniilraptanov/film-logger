@@ -8,8 +8,8 @@ type SettingsState = {
     tcs34725: Sensor;
     logging: Logging;
 
-    updateTCS34725: (form: Partial<Sensor>) => Promise<void>;
-    updateLogging: (form: Partial<Logging>) => Promise<void>;
+    updateTCS34725: (form: Partial<Sensor>) => Promise<boolean>;
+    updateLogging: (form: Partial<Logging>) => Promise<boolean>;
     fetchSettings: () => Promise<void>;
 }
 
@@ -25,6 +25,7 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
         if (updated) {
             set({ tcs34725 });
         }
+        return updated;
     }),
 
     updateLogging: withLoading(async (form: Partial<Logging>) => {
@@ -33,6 +34,7 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
         if (updated) {
             set({ logging });
         }
+        return updated;
     }),
 
     fetchSettings: withLoading(async () => {

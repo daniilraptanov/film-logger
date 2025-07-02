@@ -19,18 +19,17 @@ const App = () => {
         fetchRecords();
     }, [page, limit]);
 
-    if (isLoading) {
-        return <Loader />
-    }
-
     return (
-        <Routes>
-            <Route path="/" element={<LogsPage />} />
-            <Route path="/logs" element={<LogsPage />} />
-            <Route path="/charts" element={<ChartsPage />} />
-            <Route path="/settings" element={<SettingsPage />} />
-            <Route path="*" element={<NotFound />} />
-        </Routes>
+        <>
+            {isLoading && <Loader />}
+            <Routes>
+                <Route path="/" element={<LogsPage />} />
+                <Route path="/logs" element={<LogsPage />} />
+                <Route path="/charts" element={<ChartsPage />} />
+                <Route path="/settings" element={<SettingsPage />} />
+                <Route path="*" element={<NotFound />} />
+            </Routes>
+        </>
     );
 };
 
