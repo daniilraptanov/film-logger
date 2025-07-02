@@ -69,6 +69,6 @@ void loop() {
         );
     }
     else if (menu.isWiFiConfig()) {
-        wifiConfig.drawUI(&canvas);
+        wifiConfig.drawUI(&canvas, logger);
     }
 }

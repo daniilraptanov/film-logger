@@ -30,9 +30,8 @@ String WiFiConfig::syncData() {
     }
 }
 
-String WiFiConfig::updateHardware() {
+String WiFiConfig::updateHardware(Logger &logger) {
     APIService apiService;
-    Logger logger;
     LightSensor lightSensor;
 
     JsonDocument sensorSettings = apiService.getTSC34725Settings();
@@ -56,11 +55,11 @@ String WiFiConfig::updateHardware() {
     }
 }
 
-String WiFiConfig::initConnection() {
+String WiFiConfig::initConnection(Logger &logger) {
     APIService apiService;
     String result = apiService.checkConnection();
     if (result.length() != 0) {
-        result = updateHardware();
+        result = updateHardware(logger);
         if (result.length() != 0) {
             connectionChecked = true;
             return result;
@@ -69,7 +68,7 @@ String WiFiConfig::initConnection() {
     return F("Сервер не відповідає");
 }
 
-void WiFiConfig::drawUI(lilka::Canvas *canvas) {
+void WiFiConfig::drawUI(lilka::Canvas *canvas, Logger &logger) {
     drawCommonUI(canvas);
 
     lilka::ProgressDialog progress(F("   WiFi-мережа"), F("Зачекайте, йде підклю-\nчення до мережі WiFi..."));
@@ -88,7 +87,7 @@ void WiFiConfig::drawUI(lilka::Canvas *canvas) {
     if (WiFi.status() == WL_CONNECTED) {
         String result = "";
         if (!connectionChecked) {
-            result = initConnection();
+            result = initConnection(logger);
         } else {
             // TODO :: переробити з прогрес баром,
             // щоб показувати скільки залишилось (замість тексту).
