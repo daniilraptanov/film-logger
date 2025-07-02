@@ -110,7 +110,7 @@ const LogsTable: FC<LogsTableProps> = () => {
                         Назад
                     </button>
                     <span className="text-sm text-gray-300">
-                        Сторінка {page} з {records.totalPage} | Записів: {records.rows.length}
+                        Сторінка {page} з {records.totalPage} | Записів: {records.totalRows}
                     </span>
                     <button
                         onClick={setNextPage}
