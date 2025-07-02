@@ -20,7 +20,7 @@ const Header = () => {
                             }`
                         }
                     >
-                        Логи
+                        Журнал
                     </NavLink>
                     <NavLink
                         to="/charts"
@@ -32,7 +32,7 @@ const Header = () => {
                             }`
                         }
                     >
-                        Графіки
+                        Візуалізація
                     </NavLink>
                     <NavLink
                         to="/settings"
